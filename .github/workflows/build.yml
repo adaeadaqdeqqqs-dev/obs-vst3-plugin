@@ -19,7 +19,7 @@ concurrency:
 env:
   BUILD_TYPE: RelWithDebInfo
   OBS_REPO: https://github.com/obsproject/obs-studio.git
-  OBS_BRANCH: 31.0.3
+  OBS_BRANCH: 32.0.1
 
 jobs:
   # Windows - build plugin against OBS 32.0.1 release
@@ -34,7 +34,7 @@ jobs:
         with:
           path: obs-vst3-plugin-src
 
-      - name: Clone OBS Studio 31.0.3
+      - name: Clone OBS Studio 32.0.1
         run: |
           git clone --recursive --branch ${{ env.OBS_BRANCH }} ${{ env.OBS_REPO }} obs-studio
 
@@ -55,12 +55,15 @@ jobs:
           cd "${{ github.workspace }}/obs-studio"
           cmake -S . -B build_x64 -G "Visual Studio 17 2022" -A x64 `
             -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} `
-            -DVST3SDK_PATH="${{ github.workspace }}/vst3sdk"
+            -DVST3SDK_PATH="${{ github.workspace }}/vst3sdk" `
+            -DCMAKE_C_FLAGS="/WX- /wd5286 /wd5287" `
+            -DCMAKE_CXX_FLAGS="/WX- /wd5286 /wd5287" `
+            -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF
 
-      - name: Build
+      - name: Build (only the obs-vst3 target)
         run: |
           cd "${{ github.workspace }}/obs-studio"
-          cmake --build build_x64 --config ${{ env.BUILD_TYPE }}
+          cmake --build build_x64 --config ${{ env.BUILD_TYPE }} --target obs-vst3
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
