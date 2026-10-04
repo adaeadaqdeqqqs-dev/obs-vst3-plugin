@@ -15,6 +15,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ******************************************************************************/
 
+#include <thread>
+#include <chrono>
 #include "vst3-filter.h"
 #include "vst3-filter-audio.h"
 #include "vst3-filter-sidechain.h"
@@ -37,6 +39,27 @@
 // External globals
 extern VST3Scanner *g_scanner_list_;
 extern std::atomic<bool> g_vst3_scan_done_;
+
+// --- stability fix: wait until the background VST3 scan has finished before
+// resolving a plugin by id/path. At OBS startup saved filters are loaded while
+// the scanner thread is still running; without this wait getPathById() returns
+// empty and the plugin silently fails to load until OBS is restarted. ---
+static bool wait_for_vst3_scan(int timeout_ms = 8000)
+{
+    using namespace std::chrono;
+    const auto deadline = steady_clock::now() + milliseconds(timeout_ms);
+    while (!g_vst3_scan_done_.load(std::memory_order_acquire)) {
+        if (steady_clock::now() >= deadline) {
+            blog(LOG_WARNING,
+                 "[VST3 filter] scan still running after %d ms; "
+                 "proceeding without waiting further",
+                 timeout_ms);
+            return false;
+        }
+        std::this_thread::sleep_for(milliseconds(10));
+    }
+    return true;
+}
 
 static const char *vst3_filter_name(void *unused)
 {
@@ -272,6 +295,10 @@ void vst3_update(void *data, obs_data_t *settings)
         }
         vd->vst3_id = vst3_plugin_id;
         vd->last_init_failed = false;
+
+        // stability fix: make sure the scan is complete before we look up the
+        // plugin path, otherwise startup loads hit an empty list and fail.
+        wait_for_vst3_scan();
 
         if (!g_scanner_list_->getPathById(vst3_plugin_id).empty()) {
             vd->vst3_path =
