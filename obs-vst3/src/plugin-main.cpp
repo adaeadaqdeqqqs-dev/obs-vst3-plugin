@@ -36,10 +36,13 @@ MODULE_EXPORT bool obs_module_load(void)
     // Register single VST3 filter
     register_vst3_source();
 
-    // Register VST3 graph filter (plugin chain)
-    register_vst3_graph_source();
+    // NOTE: the VST3 graph (plugin-chain) filter is intentionally NOT registered.
+    // Its JSON chain (de)serialization is an unfinished stub in this build, so
+    // exposing it risks half-saved chains and instability. Use one single VST3
+    // filter per effect instead.
+    // register_vst3_graph_source();
 
-    blog(LOG_INFO, "[obs-vst3] Module loaded (VST3 + Graph)");
+    blog(LOG_INFO, "[obs-vst3] Module loaded (single VST3 filter only)");
     return true;
 }
 
