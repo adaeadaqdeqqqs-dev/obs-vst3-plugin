@@ -19,7 +19,7 @@ concurrency:
 env:
   BUILD_TYPE: RelWithDebInfo
   OBS_REPO: https://github.com/obsproject/obs-studio.git
-  OBS_BRANCH: 32.0.1
+  OBS_BRANCH: 31.0.3
 
 jobs:
   # Windows - build plugin against OBS 32.0.1 release
@@ -34,7 +34,7 @@ jobs:
         with:
           path: obs-vst3-plugin-src
 
-      - name: Clone OBS Studio 32.0.1
+      - name: Clone OBS Studio 31.0.3
         run: |
           git clone --recursive --branch ${{ env.OBS_BRANCH }} ${{ env.OBS_REPO }} obs-studio
 
