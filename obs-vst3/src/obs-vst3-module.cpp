@@ -238,7 +238,7 @@ bool retrieve_vst3_list()
              (long long)ms, g_scanner_list_->pluginList.size());
 
         vst3_cache_save();
-        g_vst3_scan_done_.store(true, std::memory_order_relaxed);
+        g_vst3_scan_done_.store(true, std::memory_order_release);
     }).detach();
 
     return true;
