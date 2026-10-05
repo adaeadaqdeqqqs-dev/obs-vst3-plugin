@@ -80,7 +80,7 @@ jobs:
           Get-ChildItem -Recurse $out | ForEach-Object { $_.FullName }
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: obs-vst3-PR12752-OBS32.2.2-windows-x64
           path: package/
