@@ -1,7 +1,7 @@
-name: Build obs-vst3 (OBS PR 12752) for OBS 31.0.3
+name: Build obs-vst3 (OBS PR 12752) for OBS 32.2.2
 
 # Derler: OBS gelistiricisi pkv'nin resmi VST3 PR'indaki (#12752) EN SON obs-vst3 kodunu,
-# kullanicinin OBS surumune (31.0.3) gore. ekeer kodu KULLANILMAZ.
+# kullanicinin OBS surumune (32.2.2) gore. ekeer kodu KULLANILMAZ.
 on:
   workflow_dispatch:
   push:
@@ -12,7 +12,7 @@ on:
 env:
   BUILD_TYPE: RelWithDebInfo
   OBS_REPO: https://github.com/obsproject/obs-studio.git
-  OBS_BRANCH: 31.0.3
+  OBS_BRANCH: 32.2.2
   PR_NUMBER: 12752
 
 jobs:
@@ -44,7 +44,7 @@ jobs:
           Copy-Item -Recurse pr/plugins/obs-vst3 obs-studio/plugins/obs-vst3
           Copy-Item pr/cmake/finders/FindVST3SDK.cmake obs-studio/cmake/finders/FindVST3SDK.cmake
           Add-Content -Path obs-studio/plugins/CMakeLists.txt -Value "`nadd_obs_plugin(obs-vst3 PLATFORMS WINDOWS MACOS LINUX)" -Encoding ascii
-          # OBS 31.0.3 does not define NOMINMAX globally (newer OBS does) -> std::max breaks on windows.h macros
+          # NOMINMAX is global in OBS 32.x; kept here as a harmless safety net for older OBS branches
           Add-Content -Path obs-studio/plugins/obs-vst3/CMakeLists.txt -Value "`ntarget_compile_definitions(obs-vst3 PRIVATE NOMINMAX)" -Encoding ascii
 
       - name: Get VST3 SDK
@@ -82,6 +82,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: obs-vst3-PR12752-OBS31.0.3-windows-x64
+          name: obs-vst3-PR12752-OBS32.2.2-windows-x64
           path: package/
           if-no-files-found: error
