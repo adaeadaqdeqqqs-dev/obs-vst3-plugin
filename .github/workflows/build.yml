@@ -1,7 +1,7 @@
-name: Build obs-vst3 (OBS PR 12752 + scan-wait patch) for OBS 32.2.2 and 31.0.4
+name: Build obs-vst3 (OBS PR 12752 + scan-wait + Waves cache) for OBS 32.2.2, 31.0.4, 31.0.3
 
 # Derler: OBS gelistiricisi pkv'nin resmi VST3 PR'indaki (#12752) EN SON obs-vst3 kodunu,
-# iki OBS surumune (32.2.2 ve 31.0.4) ayri ayri gore. ekeer kodu KULLANILMAZ.
+# iki OBS surumune (32.2.2, 31.0.4 ve 31.0.3) ayri ayri gore. ekeer kodu KULLANILMAZ.
 on:
   workflow_dispatch:
   push:
@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        obs_version: [ '32.2.2', '31.0.4' ]
+        obs_version: [ '32.2.2', '31.0.4', '31.0.3' ]
     env:
       OBS_BRANCH: ${{ matrix.obs_version }}
     defaults:
@@ -49,7 +49,7 @@ jobs:
           Copy-Item -Recurse pr/plugins/obs-vst3 obs-studio/plugins/obs-vst3
           Copy-Item pr/cmake/finders/FindVST3SDK.cmake obs-studio/cmake/finders/FindVST3SDK.cmake
           Add-Content -Path obs-studio/plugins/CMakeLists.txt -Value "`nadd_obs_plugin(obs-vst3 PLATFORMS WINDOWS MACOS LINUX)" -Encoding ascii
-          # NOMINMAX: global in OBS 32.x, missing in 31.x -> required for the 31.0.4 build, harmless for 32.2.2
+          # NOMINMAX: global in OBS 32.x, missing in 31.x -> required for the 31.0.3 build, harmless for 32.2.2
           Add-Content -Path obs-studio/plugins/obs-vst3/CMakeLists.txt -Value "`ntarget_compile_definitions(obs-vst3 PRIVATE NOMINMAX)" -Encoding ascii
 
       - name: Patch - wait for VST3 scan before loading plug-ins (prevents WaveShell startup crash)
@@ -81,6 +81,92 @@ jobs:
           $c = $c.Replace($a2, "waitForVst3Scan();`n`t`t" + $a2)
           [System.IO.File]::WriteAllText($f, $c, (New-Object System.Text.UTF8Encoding($false)))
           Select-String -Path $f -Pattern "waitForVst3Scan" | ForEach-Object { $_.LineNumber.ToString() + ": " + $_.Line.Trim() }
+
+      - name: Patch - cache Waves class list, rescan only when the module file changes
+        run: |
+          $f = "obs-studio/plugins/obs-vst3/obs-vst3.cpp"
+          $c = [System.IO.File]::ReadAllText($f)
+          $pairs = New-Object System.Collections.ArrayList
+          $A0 = @'
+          static void vst3CacheSave()
+          '@
+          $H0 = @'
+          // [user build patch] Module file fingerprint (size + last write time) so that modules flagged
+          // kClassesDiscardable (e.g. Waves WaveShell) can be cached and are only rescanned when the file changes.
+          static std::pair<long long, long long> vst3ModuleFingerprint(const std::string &path)
+          {
+          	std::error_code ec;
+          	const std::filesystem::path fp(path);
+          	if (std::filesystem::is_regular_file(fp, ec))
+          		return {(long long)std::filesystem::file_size(fp, ec),
+          			(long long)std::filesystem::last_write_time(fp, ec).time_since_epoch().count()};
+          	return {0, 0};
+          }
+
+          static bool vst3ModuleChanged(const std::unordered_map<std::string, std::pair<long long, long long>> &fingerprints,
+          			      const std::string &modulePath)
+          {
+          	const auto it = fingerprints.find(modulePath);
+          	if (it == fingerprints.end())
+          		return true;
+          	const auto now = vst3ModuleFingerprint(modulePath);
+          	return now.first == 0 || now != it->second;
+          }
+
+          static void vst3CacheSave()
+          '@
+          [void]$pairs.Add(@($A0, $H0))
+          $A1 = @'
+          obs_data_set_bool(obj, "isFX", p.isFX);
+          '@
+          $H1 = @'
+          obs_data_set_bool(obj, "isFX", p.isFX);
+          		{ // [user build patch] module file fingerprint
+          			const auto fpv = vst3ModuleFingerprint(p.path);
+          			obs_data_set_int(obj, "fsize", fpv.first);
+          			obs_data_set_int(obj, "mtime", fpv.second);
+          		}
+          '@
+          [void]$pairs.Add(@($A1, $H1))
+          $A2 = @'
+          std::unordered_map<std::string, ModuleCache> modules;
+          '@
+          $H2 = @'
+          std::unordered_map<std::string, ModuleCache> modules;
+          	std::unordered_map<std::string, std::pair<long long, long long>> fingerprints; // [user build patch]
+          '@
+          [void]$pairs.Add(@($A2, $H2))
+          $A3 = @'
+          classInfo.isFX = obs_data_get_bool(obj, "isFX");
+          '@
+          $H3 = @'
+          classInfo.isFX = obs_data_get_bool(obj, "isFX");
+          		fingerprints[classInfo.path] = {obs_data_get_int(obj, "fsize"), obs_data_get_int(obj, "mtime")}; // [user build patch]
+          '@
+          [void]$pairs.Add(@($A3, $H3))
+          $A4 = @'
+          list->addModuleClasses(modulePath);
+          '@
+          $H4 = @'
+          // [user build patch] reuse the cached class list while the module file is unchanged
+          			if (vst3ModuleChanged(fingerprints, modulePath)) {
+          				list->addModuleClasses(modulePath);
+          			} else {
+          				blog(LOG_INFO, "[obs-vst3 patch] Using cached class list for %s (module file unchanged)", modulePath.c_str());
+          				for (auto &classInfo : m.classes) {
+          					list->pluginList.push_back(classInfo);
+          					++list->classCount[modulePath];
+          				}
+          			}
+          '@
+          [void]$pairs.Add(@($A4, $H4))
+          foreach ($p in $pairs) {
+            $n = $c.Split($p[0]).Count - 1
+            if ($n -ne 1) { throw ("CACHE PATCH FAILED: anchor found " + $n + " times: " + $p[0]) }
+            $c = $c.Replace($p[0], $p[1])
+          }
+          [System.IO.File]::WriteAllText($f, $c, (New-Object System.Text.UTF8Encoding($false)))
+          Select-String -Path $f -Pattern "user build patch" | ForEach-Object { $_.LineNumber.ToString() + ": " + $_.Line.Trim() }
 
       - name: Get VST3 SDK
         run: |
@@ -117,6 +203,6 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v6
         with:
-          name: obs-vst3-PR12752-scanwait-OBS${{ matrix.obs_version }}-windows-x64
+          name: obs-vst3-PR12752-scanwait-wcache-OBS${{ matrix.obs_version }}-windows-x64
           path: package/
           if-no-files-found: error
