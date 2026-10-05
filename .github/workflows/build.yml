@@ -1,28 +1,21 @@
-name: Build obs-vst3-plugin
+name: Build obs-vst3 (OBS PR 12752) for OBS 31.0.3
 
+# Derler: OBS gelistiricisi pkv'nin resmi VST3 PR'indaki (#12752) EN SON obs-vst3 kodunu,
+# kullanicinin OBS surumune (31.0.3) gore. ekeer kodu KULLANILMAZ.
 on:
-  push:
-    branches: [ main, master, develop ]
-    paths:
-      - 'obs-vst3/**'
-      - '.github/workflows/build.yml'
-  pull_request:
-    branches: [ main, master ]
-  release:
-    types: [ published ]
   workflow_dispatch:
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: false
+  push:
+    branches: [ main, master ]
+    paths:
+      - '.github/workflows/build.yml'
 
 env:
   BUILD_TYPE: RelWithDebInfo
   OBS_REPO: https://github.com/obsproject/obs-studio.git
   OBS_BRANCH: 31.0.3
+  PR_NUMBER: 12752
 
 jobs:
-  # Windows - build plugin against OBS 32.0.1 release
   build-windows:
     runs-on: windows-2022
     defaults:
@@ -30,186 +23,63 @@ jobs:
         shell: pwsh
 
     steps:
-      - uses: actions/checkout@v4
-        with:
-          path: obs-vst3-plugin-src
-
-      - name: Clone OBS Studio 31.0.3
+      - name: Clone OBS Studio ${{ env.OBS_BRANCH }}
         run: |
           git clone --recursive --branch ${{ env.OBS_BRANCH }} ${{ env.OBS_REPO }} obs-studio
 
-      - name: Copy plugin & inject into OBS build
+      - name: Fetch latest obs-vst3 from OBS PR #${{ env.PR_NUMBER }}
         run: |
-          Remove-Item -Recurse -Force "${{ github.workspace }}/obs-studio/plugins/obs-vst3" -ErrorAction SilentlyContinue
-          Copy-Item -Recurse "${{ github.workspace }}/obs-vst3-plugin-src/obs-vst3" "${{ github.workspace }}/obs-studio/plugins/obs-vst3"
-          # Inject plugin into OBS cmake
-          Add-Content -Path "${{ github.workspace }}/obs-studio/CMakeLists.txt" -Value "`nadd_subdirectory(plugins/obs-vst3)" -Encoding ASCII
+          git init pr
+          cd pr
+          git remote add origin ${{ env.OBS_REPO }}
+          git config core.sparseCheckout true
+          Set-Content -Path .git/info/sparse-checkout -Value @('/plugins/obs-vst3/', '/cmake/finders/FindVST3SDK.cmake') -Encoding ascii
+          git fetch --depth 1 origin "pull/${{ env.PR_NUMBER }}/head"
+          git checkout FETCH_HEAD
+          git log -1 --format="PR commit: %H | %cd | %an | %s"
+
+      - name: Inject obs-vst3 into OBS ${{ env.OBS_BRANCH }}
+        run: |
+          Remove-Item -Recurse -Force obs-studio/plugins/obs-vst3 -ErrorAction SilentlyContinue
+          Copy-Item -Recurse pr/plugins/obs-vst3 obs-studio/plugins/obs-vst3
+          Copy-Item pr/cmake/finders/FindVST3SDK.cmake obs-studio/cmake/finders/FindVST3SDK.cmake
+          Add-Content -Path obs-studio/plugins/CMakeLists.txt -Value "`nadd_obs_plugin(obs-vst3 PLATFORMS WINDOWS MACOS LINUX)" -Encoding ascii
 
       - name: Get VST3 SDK
         run: |
-          Remove-Item -Recurse -Force "${{ github.workspace }}/vst3sdk" -ErrorAction SilentlyContinue
-          git clone --recursive https://github.com/steinbergmedia/vst3sdk.git "${{ github.workspace }}/vst3sdk"
+          git clone --recursive --depth 1 --shallow-submodules https://github.com/steinbergmedia/vst3sdk.git obs-studio/plugins/obs-vst3/sdk
 
       - name: Configure CMake
         run: |
-          cd "${{ github.workspace }}/obs-studio"
+          cd obs-studio
           cmake -S . -B build_x64 -G "Visual Studio 17 2022" -A x64 `
             -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }} `
-            -DVST3SDK_PATH="${{ github.workspace }}/vst3sdk" `
+            -DENABLE_VST3=ON `
             -DCMAKE_C_FLAGS="/WX- /wd5286 /wd5287" `
             -DCMAKE_CXX_FLAGS="/WX- /wd5286 /wd5287" `
             -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF
 
       - name: Build (only the obs-vst3 target)
         run: |
-          cd "${{ github.workspace }}/obs-studio"
+          cd obs-studio
           cmake --build build_x64 --config ${{ env.BUILD_TYPE }} --target obs-vst3
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: obs-vst3-plugin-windows-x64
-          path: |
-            ${{ github.workspace }}/obs-studio/build_x64/plugins/obs-vst3/${{ env.BUILD_TYPE }}/obs-vst3.dll
-            ${{ github.workspace }}/obs-studio/build_x64/plugins/obs-vst3/${{ env.BUILD_TYPE }}/obs-vst3.pdb
-          if-no-files-found: warn
-
-  # Linux - simplified build, only our plugin target
-  build-linux:
-    runs-on: ubuntu-24.04
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          path: obs-vst3-plugin-src
-
-      - name: Install Dependencies
+      - name: Package (same layout as C:\Program Files\obs-studio)
         run: |
-          # Enable deb-src for build-dep (Ubuntu 24.04 uses ubuntu.sources format)
-          sudo sed -i 's/Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || \
-            sudo sed -i 's/^# deb-src/deb-src/' /etc/apt/sources.list 2>/dev/null || \
-            sudo sed -i 's/^# deb-src/deb-src/' /etc/apt/sources.list.d/*.list 2>/dev/null || true
-          sudo apt-get update
-          sudo apt-get install -y software-properties-common
-          sudo add-apt-repository -y ppa:obsproject/obs-studio
-          sudo apt-get update
-          sudo apt-get build-dep -y obs-studio
-          sudo apt-get install -y build-essential cmake ninja-build pkg-config \
-            qt6-base-dev qt6-base-dev-tools qt6-wayland libgl1-mesa-dev \
-            libsimde-dev uthash-dev \
-            extra-cmake-modules
-
-      - name: Clone OBS Studio (vst3 branch)
-        run: |
-          git clone --recursive --branch ${{ env.OBS_BRANCH }} ${{ env.OBS_REPO }} obs-studio
-
-      - name: Get VST3 SDK (Linux)
-        run: |
-          git clone --recursive https://github.com/steinbergmedia/vst3sdk.git "${{ github.workspace }}/vst3sdk"
-
-      - name: Replace obs-vst3 with our version
-        run: |
-          rm -rf "${{ github.workspace }}/obs-studio/plugins/obs-vst3"
-          cp -r "${{ github.workspace }}/obs-vst3-plugin-src/obs-vst3" "${{ github.workspace }}/obs-studio/plugins/obs-vst3"
-
-      - name: Configure CMake
-        run: |
-          cd "${{ github.workspace }}/obs-studio"
-          cmake --preset ubuntu \
-            -DENABLE_VST3=ON -DENABLE_VST=OFF \
-            -DENABLE_BROWSER=OFF -DENABLE_WEBRTC=OFF \
-            -DENABLE_PIPEWIRE=ON -DENABLE_PULSEAUDIO=ON \
-            -DENABLE_JACK=ON \
-            -DVST3SDK_PATH="${{ github.workspace }}/vst3sdk"
-
-      - name: Build
-        run: |
-          cd "${{ github.workspace }}/obs-studio"
-          cmake --build build_ubuntu
+          $out = "package"
+          New-Item -ItemType Directory -Force "$out/obs-plugins/64bit" | Out-Null
+          New-Item -ItemType Directory -Force "$out/data/obs-plugins/obs-vst3" | Out-Null
+          $dll = Get-ChildItem -Recurse obs-studio/build_x64 -Filter obs-vst3.dll | Select-Object -First 1
+          if (-not $dll) { throw "obs-vst3.dll bulunamadi" }
+          Copy-Item $dll.FullName "$out/obs-plugins/64bit/"
+          $pdb = Get-ChildItem -Recurse obs-studio/build_x64 -Filter obs-vst3.pdb | Select-Object -First 1
+          if ($pdb) { Copy-Item $pdb.FullName "$out/obs-plugins/64bit/" }
+          Copy-Item -Recurse "obs-studio/plugins/obs-vst3/data/*" "$out/data/obs-plugins/obs-vst3/"
+          Get-ChildItem -Recurse $out | ForEach-Object { $_.FullName }
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: obs-vst3-plugin-linux-x64
-          path: |
-            ${{ github.workspace }}/obs-studio/build_ubuntu/plugins/obs-vst3/*.so
-          if-no-files-found: warn
-
-  # macOS - compile check only (vst3 branch requires future macOS SDK)
-  build-macos:
-    runs-on: macos-15
-
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          path: obs-vst3-plugin-src
-
-      - name: Install Dependencies
-        run: |
-          brew install cmake
-
-      - name: Install OBS from Homebrew (provides dev headers)
-        run: |
-          brew install --cask obs-studio || true
-          brew tap homebrew/cask-versions || true
-
-      - name: Get VST3 SDK headers (macOS)
-        run: |
-          git clone --recursive https://github.com/steinbergmedia/vst3sdk.git "${{ github.workspace }}/vst3sdk"
-
-      - name: Compile check - verify our source files compile
-        run: |
-          cd "${{ github.workspace }}/obs-vst3-plugin-src/obs-vst3"
-          # Try to find obs headers installed by homebrew
-          OBS_INCLUDE=$(find /usr/local /opt/homebrew /Applications -name "obs-module.h" -path "*/obs-studio/*" 2>/dev/null | head -1)
-          if [ -z "$OBS_INCLUDE" ]; then
-            # Fallback: clone OBS stable release just for headers
-            git clone --depth 1 --branch 32.1.2 https://github.com/obsproject/obs-studio.git /tmp/obs-headers
-            OBS_INCLUDE_DIR="/tmp/obs-headers/libobs:/tmp/obs-headers"
-          else
-            OBS_INCLUDE_DIR=$(dirname "$(dirname "$OBS_INCLUDE")")
-          fi
-          echo "OBS include dir: $OBS_INCLUDE_DIR"
-
-          # Try to compile each source file
-          FAILED=0
-          for src in src/*.cpp; do
-            echo "--- Checking $src ---"
-            g++ -std=c++17 -fsyntax-only \
-              -Iinclude \
-              -I/usr/local/include \
-              -I"${{ github.workspace }}/vst3sdk" \
-              -I"${{ github.workspace }}/vst3sdk/base" \
-              -I"${{ github.workspace }}/vst3sdk/pluginterfaces" \
-              -I"${{ github.workspace }}/vst3sdk/public.sdk/source/vst" \
-              -I"${{ github.workspace }}/vst3sdk/public.sdk/source/vst/hosting" \
-              -I"${{ github.workspace }}/vst3sdk/public.sdk/source/vst/utility" \
-              -I$(echo "$OBS_INCLUDE_DIR" | cut -d: -f1) \
-              -I$(echo "$OBS_INCLUDE_DIR" | cut -d: -f2) \
-              -c "$src" -o /dev/null 2>&1 | head -5 || FAILED=1
-          done
-          if [ "$FAILED" = "0" ]; then echo "✅ macOS compile check passed!"; else echo "❌ Some files failed"; fi
-
-  create-release:
-    needs: [build-windows]
-    if: github.event_name == 'release' && github.event.action == 'published'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-
-      - name: Create Release Package
-        run: |
-          mkdir -p release
-          cd artifacts
-          for dir in */; do
-            zip -r "../release/${dir%/}.zip" "$dir"
-          done
-
-      - name: Upload Release Assets
-        uses: softprops/action-gh-release@v2
-        with:
-          files: release/*
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: obs-vst3-PR12752-OBS31.0.3-windows-x64
+          path: package/
+          if-no-files-found: error
