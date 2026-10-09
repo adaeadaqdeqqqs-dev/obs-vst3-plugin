@@ -13,6 +13,7 @@
 //  TESTFX_NAN_EVERY         : write NaN into every Nth output block
 //  TESTFX_FAIL_SETSTATE     : the first N component setState() calls are rejected
 //  TESTFX_DISCARDABLE       : the factory reports kClassesDiscardable (like Waves' WaveShell)
+//  TESTFX_DEFAULT_GAIN      : gain of a new instance (default 0.5; 1.0 = bit-exact pass-through)
 // Crash switches (Windows crash-guard tests; TESTFX_CRASH_CLASS = 1: only class A, 2: only class B, 0: both):
 //  TESTFX_CRASH_PROCESS_AFTER : access violation in process() at block N
 //  TESTFX_THROW_PROCESS_AFTER : C++ exception thrown out of process() at block N
@@ -37,7 +38,13 @@
 #include <cstdio>
 #include <cstdlib>
 #include <stdexcept>
+#include <string>
 #include <thread>
+
+#if defined(_M_X64) || defined(__x86_64__)
+#include <xmmintrin.h>
+#define TESTFX_HAS_MXCSR 1
+#endif
 
 using namespace Steinberg;
 using namespace Steinberg::Vst;
@@ -66,6 +73,7 @@ struct TestFxStats {
 	std::atomic<long> offMainThreadControl{0}, activations{0}, restartsRequested{0};
 	std::atomic<long> initFailuresGiven{0};
 	std::atomic<long> lastViolationKind{0};
+	std::atomic<long> ftzOn{0}, ftzOff{0}; // process() calls with / without denormals flushed to zero
 };
 static TestFxStats gStats;
 static std::atomic<std::thread::id> gMainThread{};
@@ -228,6 +236,12 @@ public:
 	{
 		inProcess++;
 		gStats.processCalls++;
+#ifdef TESTFX_HAS_MXCSR
+		if ((_mm_getcsr() & 0x8040u) == 0x8040u)
+			gStats.ftzOn++;
+		else
+			gStats.ftzOff++;
+#endif
 		if (!active || !processing)
 			gStats.processWhileInactive++;
 
@@ -291,7 +305,12 @@ private:
 	std::atomic<int> inProcess{0};
 	std::atomic<bool> active{false}, processing{false};
 	std::atomic<long> blockCount{0};
-	float gain = 0.5f;
+	float gain = defaultGain();
+	static float defaultGain()
+	{
+		const char *v = std::getenv("TESTFX_DEFAULT_GAIN");
+		return v ? std::stof(v) : 0.5f;
+	}
 };
 
 class TestController : public EditController {

@@ -6,7 +6,7 @@ project(obs-vst3-test)
 find_package(Qt6 REQUIRED Core)
 
 add_executable(obs-vst3-harness harness.cpp)
-target_link_libraries(obs-vst3-harness PRIVATE OBS::libobs Qt::Core)
+target_link_libraries(obs-vst3-harness PRIVATE OBS::libobs Qt::Core $<$<PLATFORM_ID:Windows>:psapi>)
 target_compile_definitions(obs-vst3-harness PRIVATE NOMINMAX)
 
 set(VST3SDK "${CMAKE_SOURCE_DIR}/plugins/obs-vst3/sdk")

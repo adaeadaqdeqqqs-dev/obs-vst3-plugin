@@ -26,13 +26,19 @@ $scenarios = @(
   @{ n = 'crash_init';        e = @{ TESTFX_CRASH_INIT = '1'; TESTFX_CRASH_CLASS = '1' } },
   @{ n = 'crash_setstate';    e = @{ TESTFX_CRASH_SETSTATE = '1'; TESTFX_CRASH_CLASS = '1' } },
   @{ n = 'crash_initdll';     e = @{ TESTFX_CRASH_INITDLL = '1' } },
+  @{ n = 'quality_1';         e = @{ TESTFX_DEFAULT_GAIN = '1'; HARNESS_SECONDS = '20' } },
+  @{ n = 'quality_16';        e = @{ TESTFX_DEFAULT_GAIN = '1'; HARNESS_SECONDS = '20' } },
+  @{ n = 'soak';              e = @{ TESTFX_DEFAULT_GAIN = '1'; TESTFX_RESTART_EVERY = '997'; HARNESS_SECONDS = 'SOAK' } },
   @{ n = 'shell_rescan';      e = @{ TESTFX_DISCARDABLE = '1' }; cfg = 'shell' },
   @{ n = 'shell_next_start';  e = @{ TESTFX_DISCARDABLE = '1' }; cfg = 'shell' },
   @{ n = 'shell_cached';      e = @{ TESTFX_DISCARDABLE = '1' }; cfg = 'shell' }
 )
 $knobs = @('TESTFX_SLOW_PROCESS_US','TESTFX_SLOW_ACTIVE_MS','TESTFX_RESTART_EVERY','TESTFX_RESTART_IN_ACTIVE',
   'TESTFX_FAIL_INIT','TESTFX_NAN_EVERY','TESTFX_FAIL_SETSTATE','TESTFX_DISCARDABLE','TESTFX_CRASH_PROCESS_AFTER',
-  'TESTFX_THROW_PROCESS_AFTER','TESTFX_CRASH_INIT','TESTFX_CRASH_SETSTATE','TESTFX_CRASH_INITDLL','TESTFX_CRASH_CLASS')
+  'TESTFX_THROW_PROCESS_AFTER','TESTFX_CRASH_INIT','TESTFX_CRASH_SETSTATE','TESTFX_CRASH_INITDLL','TESTFX_CRASH_CLASS',
+  'TESTFX_DEFAULT_GAIN','HARNESS_SECONDS','HARNESS_EXPECT_FTZ')
+$soakSeconds = @{ base = '600'; new = '1200' }
+$details = New-Object System.Collections.Generic.List[string]
 
 $summary = New-Object System.Collections.Generic.List[string]
 $summary.Add('| Scenario | ' + (($Variants -split ';' | ForEach-Object { ($_ -split '=')[0] }) -join ' | ') + ' |')
@@ -42,9 +48,8 @@ $newFailures = 0
 
 foreach ($v in ($Variants -split ';')) {
   $name, $dir = $v -split '=', 2
-  # libobs takes the module name from the text after the last '/', so the paths use forward slashes
-  $dll = (Join-Path $dir 'obs-vst3.dll').Replace('\', '/')
-  $data = (Join-Path $dir 'data').Replace('\', '/')
+  $dll = Join-Path $dir 'obs-vst3.dll'
+  $data = Join-Path $dir 'data'
   $shellCfg = $null
   foreach ($s in $scenarios) {
     # every run gets its own VST3 folder (scanner path) and OBS config folder; the shell runs share one
@@ -61,7 +66,14 @@ foreach ($v in ($Variants -split ';')) {
     New-Item -ItemType Directory -Force $cfg | Out-Null
 
     foreach ($k in $knobs) { Remove-Item "Env:$k" -ErrorAction SilentlyContinue }
-    foreach ($k in $s.e.Keys) { Set-Item "Env:$k" $s.e[$k] }
+    foreach ($k in $s.e.Keys) {
+      $val = $s.e[$k]
+      if ($val -eq 'SOAK') { $val = $soakSeconds[$name] }
+      Set-Item "Env:$k" $val
+    }
+    if ($name -eq 'new') { $env:HARNESS_EXPECT_FTZ = '1' }
+    $timeoutMs = 240000
+    if ($env:HARNESS_SECONDS) { $timeoutMs = ([int]$env:HARNESS_SECONDS + 240) * 1000 }
     $env:LOCALAPPDATA = $testHome
 
     $out = Join-Path $results ("{0}_{1}.txt" -f $name, $s.n)
@@ -69,8 +81,13 @@ foreach ($v in ($Variants -split ';')) {
     $p = Start-Process -FilePath $harness -ArgumentList @("`"$dll`"", "`"$data`"", "`"$fx`"", "`"$cfg`"", $s.n) `
          -WorkingDirectory $ObsBin -NoNewWindow -PassThru -RedirectStandardOutput $out -RedirectStandardError $err
     $null = $p.Handle # keeps the exit code readable after the process ends
-    if (-not $p.WaitForExit(240000)) { $p.Kill(); $code = 'TIMEOUT' } else { $code = $p.ExitCode }
+    if (-not $p.WaitForExit($timeoutMs)) { $p.Kill(); $code = 'TIMEOUT' } else { $code = $p.ExitCode }
     $text = (Get-Content $out -Raw -ErrorAction SilentlyContinue) + ''
+    foreach ($line in ($text -split "`n")) {
+      if ($line -match '^RESULT (filters|host-time|soak-|plugin-process|gain|harness-alive-after|error-text)') {
+        $details.Add(("{0,-5} {1,-18} {2}" -f $name, $s.n, $line.Trim()))
+      }
+    }
     $failed = ([regex]::Matches($text, 'CHECK .* FAILED')).Count
     if ($code -is [int] -and $code -ne 0 -and $code -ne 1) {
       $cell = ('CRASH 0x{0:X8}' -f ($code -band 0xFFFFFFFF))
@@ -93,5 +110,6 @@ foreach ($s in $scenarios) {
   $summary.Add($row)
 }
 $summary | Set-Content (Join-Path $results 'summary.md') -Encoding utf8
+$details | Set-Content (Join-Path $results 'details.txt') -Encoding utf8
 "NEW_FAILURES=$newFailures" | Set-Content (Join-Path $results 'status.txt') -Encoding ascii
 $summary | ForEach-Object { Write-Output $_ }

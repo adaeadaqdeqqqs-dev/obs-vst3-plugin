@@ -9,9 +9,12 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#include <psapi.h>
 #else
 #include <obs-nix-platform.h>
+#include <dirent.h>
 #include <dlfcn.h>
+#include <unistd.h>
 #endif
 
 #include <atomic>
@@ -20,8 +23,10 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <deque>
 #include <functional>
 #include <mutex>
+#include <unordered_map>
 #include <string>
 #include <thread>
 #include <vector>
@@ -33,6 +38,7 @@ struct TestFxStats {
 	std::atomic<long> offMainThreadControl{0}, activations{0}, restartsRequested{0};
 	std::atomic<long> initFailuresGiven{0};
 	std::atomic<long> lastViolationKind{0};
+	std::atomic<long> ftzOn{0}, ftzOff{0};
 };
 
 static TestFxStats *stats = nullptr;
@@ -92,6 +98,16 @@ static void tsrc_destroy(void *d)
 	delete static_cast<TestSrc *>(d);
 }
 
+// Deterministic test signal, a function of the sample index: L and R are different white-noise sequences.
+static inline float genSample(uint64_t k, int ch)
+{
+	uint64_t z = k * 2 + (uint64_t)ch + 0x9E3779B97F4A7C15ULL;
+	z = (z ^ (z >> 30)) * 0xBF58476D1CE4E5B9ULL;
+	z = (z ^ (z >> 27)) * 0x94D049BB133111EBULL;
+	z ^= z >> 31;
+	return (float)((double)(z >> 40) / (double)(1ULL << 24) - 0.5); // [-0.5, 0.5), exact in float
+}
+
 struct Feed {
 	obs_source_t *src = nullptr;
 	std::atomic<bool> run{true};
@@ -99,6 +115,39 @@ struct Feed {
 	std::mutex m;
 	double sumSq = 0;
 	long frames = 0, nonFinite = 0, packets = 0;
+	// verified mode: noise input, variable packet sizes, every output sample compared with the input
+	bool verify = false;
+	uint64_t fed = 0;              // input samples sent so far
+	bool synced = false;
+	uint64_t nextIdx = 0;          // input index expected for the next output sample
+	long long matched = 0, mismatched = 0, resyncs = 0, unsyncedFrames = 0;
+	long long swapLR = 0;
+	double overheadSumUs = 0, overheadMaxUs = 0;
+	long long overheadN = 0;
+	// index of the last 2 s of fed input, keyed by the bit pattern of the left sample (fast re-lock)
+	std::unordered_map<uint32_t, uint64_t> recent;
+	std::deque<uint32_t> recentOrder;
+	void remember(uint64_t k)
+	{
+		const float v = genSample(k, 0);
+		uint32_t bits;
+		std::memcpy(&bits, &v, 4);
+		recent[bits] = k;
+		recentOrder.push_back(bits);
+		if (recentOrder.size() > 96000) {
+			auto it = recent.find(recentOrder.front());
+			if (it != recent.end() && it->second + 96000 <= k)
+				recent.erase(it);
+			recentOrder.pop_front();
+		}
+	}
+	void resetVerify()
+	{
+		std::lock_guard<std::mutex> l(m);
+		matched = mismatched = resyncs = unsyncedFrames = swapLR = 0;
+		overheadSumUs = overheadMaxUs = 0;
+		overheadN = 0;
+	}
 	void reset()
 	{
 		std::lock_guard<std::mutex> l(m);
@@ -116,6 +165,49 @@ struct Feed {
 	}
 };
 
+static void verifyBlock(Feed *f, const float *L, const float *R, uint32_t n)
+{
+	for (uint32_t i = 0; i < n; ++i) {
+		if (f->synced) {
+			if (L[i] == genSample(f->nextIdx, 0) && R[i] == genSample(f->nextIdx, 1)) {
+				f->matched++;
+				f->nextIdx++;
+				continue;
+			}
+			f->mismatched++;
+			f->synced = false;
+		}
+		// (re)lock: the input index whose L/R pair equals this sample and the next 7 samples
+		bool locked = false;
+		if (i + 8 <= n) {
+			uint32_t bits;
+			std::memcpy(&bits, &L[i], 4);
+			auto it = f->recent.find(bits);
+			if (it != f->recent.end()) {
+				const uint64_t k = it->second;
+				bool ok = true;
+				for (uint32_t j = 0; j < 8 && ok; ++j)
+					ok = L[i + j] == genSample(k + j, 0) && R[i + j] == genSample(k + j, 1);
+				if (ok) {
+					f->synced = true;
+					f->resyncs++;
+					f->matched++;
+					f->nextIdx = k + 1;
+					locked = true;
+				}
+			} else {
+				uint32_t rbits;
+				std::memcpy(&rbits, &R[i], 4);
+				auto jt = f->recent.find(rbits);
+				if (jt != f->recent.end() && L[i] == genSample(jt->second, 1))
+					f->swapLR++; // left and right exchanged
+			}
+		}
+		if (!locked)
+			f->unsyncedFrames++;
+	}
+}
+
 static void capture_cb(void *param, obs_source_t *, const struct audio_data *audio, bool)
 {
 	auto *f = static_cast<Feed *>(param);
@@ -123,6 +215,8 @@ static void capture_cb(void *param, obs_source_t *, const struct audio_data *aud
 	if (!L)
 		return;
 	std::lock_guard<std::mutex> l(f->m);
+	if (f->verify)
+		verifyBlock(f, L, reinterpret_cast<const float *>(audio->data[1]), audio->frames);
 	for (uint32_t i = 0; i < audio->frames; ++i) {
 		if (!std::isfinite(L[i])) {
 			f->nonFinite++;
@@ -134,8 +228,57 @@ static void capture_cb(void *param, obs_source_t *, const struct audio_data *aud
 	f->packets++;
 }
 
+static void feed_thread_verified(Feed *f)
+{
+	// packet sizes of real capture devices and drivers, mixed
+	static const uint32_t sizes[] = {480, 441, 256, 1024, 333, 512, 480, 960, 128, 480, 600, 192};
+	std::vector<float> L(1024), R(1024);
+	const uint64_t t0 = os_gettime_ns();
+	size_t si = 0;
+	while (f->run.load()) {
+		const uint32_t n = sizes[si++ % (sizeof(sizes) / sizeof(sizes[0]))];
+		const uint64_t start = f->fed;
+		for (uint32_t i = 0; i < n; ++i) {
+			L[i] = genSample(start + i, 0);
+			R[i] = genSample(start + i, 1);
+		}
+		struct obs_source_audio a = {};
+		a.data[0] = reinterpret_cast<uint8_t *>(L.data());
+		a.data[1] = reinterpret_cast<uint8_t *>(R.data());
+		a.frames = n;
+		a.speakers = SPEAKERS_STEREO;
+		a.format = AUDIO_FORMAT_FLOAT_PLANAR;
+		a.samples_per_sec = 48000;
+		a.timestamp = t0 + (uint64_t)((double)start * 1e9 / 48000.0);
+		{
+			std::lock_guard<std::mutex> l(f->m);
+			for (uint32_t i = 0; i < n; ++i)
+				f->remember(start + i);
+			f->fed = start + n;
+		}
+		const auto c0 = std::chrono::steady_clock::now();
+		obs_source_output_audio(f->src, &a);
+		const double us = std::chrono::duration<double, std::micro>(std::chrono::steady_clock::now() - c0).count();
+		{
+			std::lock_guard<std::mutex> l(f->m);
+			f->overheadSumUs += us;
+			f->overheadN++;
+			if (us > f->overheadMaxUs)
+				f->overheadMaxUs = us;
+		}
+		const uint64_t next = t0 + (uint64_t)((double)(start + n) * 1e9 / 48000.0);
+		const uint64_t now = os_gettime_ns();
+		if (next > now)
+			std::this_thread::sleep_for(std::chrono::nanoseconds(next - now));
+	}
+}
+
 static void feed_thread(Feed *f)
 {
+	if (f->verify) {
+		feed_thread_verified(f);
+		return;
+	}
 	std::vector<float> L(480), R(480);
 	double phase = 0;
 	uint64_t ts = os_gettime_ns();
@@ -160,10 +303,11 @@ static void feed_thread(Feed *f)
 	}
 }
 
-static Feed *startFeed(obs_source_t *src)
+static Feed *startFeed(obs_source_t *src, bool verify = false)
 {
 	auto *f = new Feed();
 	f->src = src;
+	f->verify = verify;
 	obs_source_add_audio_capture_callback(src, capture_cb, f);
 	f->th = std::thread(feed_thread, f);
 	return f;
@@ -261,6 +405,47 @@ static void printStats(const char *when)
 		    stats->processWhileInactive.load(), stats->offMainThreadControl.load(), stats->activations.load(),
 		    stats->restartsRequested.load(), stats->lastViolationKind.load());
 	std::fflush(stdout);
+}
+
+static int envInt(const char *name, int def)
+{
+	const char *v = std::getenv(name);
+	return v ? std::atoi(v) : def;
+}
+
+static long memoryKB() // private memory of this process
+{
+#ifdef _WIN32
+	PROCESS_MEMORY_COUNTERS_EX pmc = {};
+	if (GetProcessMemoryInfo(GetCurrentProcess(), reinterpret_cast<PROCESS_MEMORY_COUNTERS *>(&pmc), sizeof(pmc)))
+		return static_cast<long>(pmc.PrivateUsage / 1024);
+	return -1;
+#else
+	long pages = 0, resident = -1;
+	if (FILE *fp = std::fopen("/proc/self/statm", "r")) {
+		if (std::fscanf(fp, "%ld %ld", &pages, &resident) != 2)
+			resident = -1;
+		std::fclose(fp);
+	}
+	return resident < 0 ? -1 : resident * (sysconf(_SC_PAGESIZE) / 1024);
+#endif
+}
+
+static long handleCount() // open handles (Windows) / file descriptors (Linux)
+{
+#ifdef _WIN32
+	DWORD n = 0;
+	GetProcessHandleCount(GetCurrentProcess(), &n);
+	return static_cast<long>(n);
+#else
+	long n = 0;
+	if (DIR *d = opendir("/proc/self/fd")) {
+		while (readdir(d))
+			n++;
+		closedir(d);
+	}
+	return n;
+#endif
 }
 
 static bool scanFinished()
@@ -363,7 +548,8 @@ int main(int argc, char **argv)
 	const long entryAfterScan = stats->moduleEntry.load();
 
 	obs_source_t *src = obs_source_create("test_audio_src", "mic", nullptr, nullptr);
-	Feed *feed = startFeed(src);
+	const bool verified = scenario == "quality_1" || scenario == "quality_16" || scenario == "soak";
+	Feed *feed = startFeed(src, verified);
 	std::vector<obs_source_t *> filters;
 
 	if (scenario == "basic") {
@@ -561,6 +747,120 @@ int main(int argc, char **argv)
 		// the module crashes in its entry point while the scanner loads it
 		std::printf("RESULT harness-alive-after-scan=1 classes-found=%d\n", (int)!idA.empty());
 		check(idA.empty(), "the crashing module is skipped by the scanner");
+	} else if (scenario == "quality_1" || scenario == "quality_16") {
+		// TESTFX_DEFAULT_GAIN=1: bit-exact pass-through plug-ins. White noise (different on L and R) in packets of
+		// mixed sizes; every output sample must equal its input sample exactly (nothing lost, added or changed).
+		const int n = scenario == "quality_1" ? 1 : 16;
+		for (int i = 0; i < n; ++i)
+			filters.push_back(addFilter(src, (i % 2) ? idB : idA, ("q" + std::to_string(i)).c_str()));
+		pump(2500);
+		feed->resetVerify();
+		const int seconds = envInt("HARNESS_SECONDS", 20);
+		pump(seconds * 1000);
+		long long matched, mismatched, resyncs, unsynced, swapLR;
+		double avgUs, maxUs;
+		{
+			std::lock_guard<std::mutex> l(feed->m);
+			matched = feed->matched;
+			mismatched = feed->mismatched;
+			resyncs = feed->resyncs;
+			unsynced = feed->unsyncedFrames;
+			swapLR = feed->swapLR;
+			avgUs = feed->overheadN ? feed->overheadSumUs / feed->overheadN : 0;
+			maxUs = feed->overheadMaxUs;
+		}
+		std::printf("RESULT filters=%d seconds=%d samples-identical=%lld samples-different=%lld relocks=%lld "
+			    "unmatched=%lld channel-swaps=%lld\n",
+			    n, seconds, matched, mismatched, resyncs, unsynced, swapLR);
+		std::printf("RESULT host-time-per-packet avg=%.1fus max=%.1fus (%d filters)\n", avgUs, maxUs, n);
+		check(matched >= (long long)seconds * 48000 * 97 / 100, "all audio arrives (no lost samples)");
+		check(mismatched == 0 && resyncs <= 1, "output bit-identical to the input (no change, gap or repeat)");
+		check(swapLR == 0, "left and right channels stay in place");
+		check(feed->nonFinite == 0, "no NaN/Inf in the output");
+	} else if (scenario == "soak") {
+		// 16 pass-through filters (like a long chain) under continuous audio, while OBS-like actions happen:
+		// settings saved every 2 s, properties opened every 7 s, a filter switched to the other plug-in and back
+		// every 20 s, Rescan every 60 s, plus latency restarts requested by the plug-ins (TESTFX_RESTART_EVERY).
+		const int n = 16;
+		for (int i = 0; i < n; ++i)
+			filters.push_back(addFilter(src, (i % 2) ? idB : idA, ("k" + std::to_string(i)).c_str()));
+		pump(3000);
+		feed->resetVerify();
+		const int seconds = envInt("HARNESS_SECONDS", 120);
+		const long mem0 = memoryKB(), handles0 = handleCount();
+		long memMax = mem0, handlesMax = handles0;
+		long saves = 0, props = 0, swaps = 0, rescans = 0;
+		const auto t0 = std::chrono::steady_clock::now();
+		for (int tick = 1;; ++tick) {
+			pump(500);
+			const double elapsed =
+				std::chrono::duration<double>(std::chrono::steady_clock::now() - t0).count();
+			if (elapsed >= seconds)
+				break;
+			if (tick % 4 == 0) {
+				obs_data_t *d = obs_save_source(filters[tick % n]);
+				obs_data_release(d);
+				saves++;
+			}
+			if (tick % 14 == 0) {
+				obs_properties_t *pr = obs_source_properties(filters[(tick / 14) % n]);
+				obs_properties_destroy(pr);
+				props++;
+			}
+			if (tick % 40 == 0 || tick % 40 == 10) {
+				const int k = (tick / 40) % n;
+				const bool toOther = tick % 40 == 0;
+				const bool isB = (k % 2) == 1;
+				setPlugin(filters[k], (isB != toOther) ? idB : idA);
+				swaps++;
+			}
+			if (tick % 120 == 0) {
+				pressRescan(filters[0]);
+				waitScan(60000);
+				rescans++;
+			}
+			if (tick % 20 == 0) {
+				const long m = memoryKB(), h = handleCount();
+				if (m > memMax)
+					memMax = m;
+				if (h > handlesMax)
+					handlesMax = h;
+				std::lock_guard<std::mutex> l(feed->m);
+				std::printf("RESULT soak t=%.0fs memory=%ldKB handles=%ld identical=%lld different=%lld "
+					    "relocks=%lld\n",
+					    elapsed, m, h, feed->matched, feed->mismatched, feed->resyncs);
+				std::fflush(stdout);
+			}
+		}
+		const long mem1 = memoryKB(), handles1 = handleCount();
+		long long matched, mismatched, resyncs, unsynced;
+		{
+			std::lock_guard<std::mutex> l(feed->m);
+			matched = feed->matched;
+			mismatched = feed->mismatched;
+			resyncs = feed->resyncs;
+			unsynced = feed->unsyncedFrames;
+		}
+		std::printf("RESULT soak-done seconds=%d saves=%ld properties=%ld switches=%ld rescans=%ld restarts=%ld\n",
+			    seconds, saves, props, swaps, rescans, stats->restartsRequested.load());
+		std::printf("RESULT soak-audio identical=%lld different=%lld relocks=%lld unmatched=%lld\n", matched,
+			    mismatched, resyncs, unsynced);
+		std::printf("RESULT soak-memory start=%ldKB end=%ldKB max=%ldKB handles start=%ld end=%ld max=%ld\n", mem0,
+			    mem1, memMax, handles0, handles1, handlesMax);
+		check(matched >= (long long)seconds * 48000 * 97 / 100, "audio kept flowing for the whole run");
+		check(mismatched <= swaps + 1, "audio only changes at plug-in switches (nothing else disturbs it)");
+		check(mem1 - mem0 < 40 * 1024, "no memory growth over the run (< 40 MB)");
+		check(handles1 - handles0 < 200, "no handle leak over the run");
+		// after the last action the stream must be bit-exact again
+		pump(1500);
+		feed->resetVerify();
+		pump(5000);
+		{
+			std::lock_guard<std::mutex> l(feed->m);
+			std::printf("RESULT soak-final identical=%lld different=%lld\n", feed->matched, feed->mismatched);
+			check(feed->mismatched == 0 && feed->matched >= 5 * 48000 * 97 / 100,
+			      "bit-identical audio after the run");
+		}
 	} else if (scenario == "stress") {
 		for (int round = 0; round < 12; ++round) {
 			filters.push_back(addFilter(src, (round % 2) ? idA : idB, ("s" + std::to_string(round)).c_str()));
@@ -591,6 +891,9 @@ int main(int argc, char **argv)
 	check(violations == 0, "no plug-in control call while process() was running");
 	check(inactive == 0, "process() never called on an inactive plug-in");
 	check(offmain == 0, "plug-in control/teardown only on the UI thread");
+	std::printf("RESULT plugin-process-calls ftz-on=%ld ftz-off=%ld\n", stats->ftzOn.load(), stats->ftzOff.load());
+	if (envInt("HARNESS_EXPECT_FTZ", 0) && stats->processCalls.load() > 0)
+		check(stats->ftzOff.load() == 0, "plug-ins always process with denormals flushed to zero");
 	if (scenario.rfind("crash_", 0) != 0 && scenario != "throw_process")
 		check(stats->moduleExit.load() == stats->moduleEntry.load(), "every module entry has its exit");
 	std::printf("RESULT failures=%d\n", failures);
