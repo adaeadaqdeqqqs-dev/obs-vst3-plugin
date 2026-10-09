@@ -1,11 +1,23 @@
-name: Build obs-vst3 (OBS PR 12752 + scan-wait + Waves cache + safe rescan) for OBS 32.2.2, 31.0.4, 31.0.3
+name: Build obs-vst3 (OBS PR 12752 + stability patch) for OBS 31.0.4
 
-# Derler: OBS gelistiricisi pkv'nin resmi VST3 PR'indaki (#12752) EN SON obs-vst3 kodunu,
-# iki OBS surumune (32.2.2, 31.0.4 ve 31.0.3) ayri ayri gore. ekeer kodu KULLANILMAZ.
+# obs-vst3 for OBS 31.0.4, built from:
+#   - pkv's VST3 host from OBS pull request #12752, pinned to commit PR_COMMIT (the newest version of the PR)
+#   - Steinberg VST3 SDK, pinned to tag VST3SDK_TAG (the newest SDK release)
+#   - one stability patch (embedded below, checked with SHA-256 before it is applied):
+#       * scan wait (no plug-in is loaded while the VST3 scan runs), Waves class-list cache, safe Rescan button
+#       * VST2-style lock: a plug-in is never (de)activated or restored while it is processing audio
+#       * restartComponent (latency / parameter changes) handled on the UI thread, never from the audio thread
+#       * every .vst3 module is loaded once per OBS session and shared (WaveShell: one InitDll, one ExitDll)
+#       * crash guard: a plug-in that crashes disables only its own filter, OBS keeps running
+#       * a plug-in that fails to load is retried automatically after 3 s and 10 s
+#       * invalid samples (NaN/Inf) from a plug-in never reach OBS
+#       * scanner never aborts on an unreadable folder or a broken module
+#       * Turkish language file included
+# Another OBS version: add it to the obs_version list below, e.g. [ '31.0.4', '32.2.2' ].
 on:
   workflow_dispatch:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, vst3-saglam ]
     paths:
       - '.github/workflows/build.yml'
 
@@ -13,6 +25,9 @@ env:
   BUILD_TYPE: RelWithDebInfo
   OBS_REPO: https://github.com/obsproject/obs-studio.git
   PR_NUMBER: 12752
+  PR_COMMIT: 39984171fee94ca8661e6544813c8c0358347a4c
+  VST3SDK_TAG: v3.8.1_build_84
+  PATCH_SHA256: 83A5BA475D8739820C2E0A3AB32147F04CA6E56671CC7B2300CDF3EF65289AB4
 
 jobs:
   build-windows:
@@ -20,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        obs_version: [ '32.2.2', '31.0.4', '31.0.3' ]
+        obs_version: [ '31.0.4' ]
     env:
       OBS_BRANCH: ${{ matrix.obs_version }}
     defaults:
@@ -31,17 +46,301 @@ jobs:
       - name: Clone OBS Studio ${{ env.OBS_BRANCH }}
         run: |
           git clone --recursive --branch ${{ env.OBS_BRANCH }} ${{ env.OBS_REPO }} obs-studio
+          if ($LASTEXITCODE -ne 0) { throw "OBS clone failed" }
 
-      - name: Fetch latest obs-vst3 from OBS PR #${{ env.PR_NUMBER }}
+      - name: Fetch obs-vst3 from OBS PR ${{ env.PR_NUMBER }} (pinned commit)
         run: |
           git init pr
           cd pr
+          git config core.autocrlf false
           git remote add origin ${{ env.OBS_REPO }}
           git config core.sparseCheckout true
           Set-Content -Path .git/info/sparse-checkout -Value @('/plugins/obs-vst3/', '/cmake/finders/FindVST3SDK.cmake') -Encoding ascii
-          git fetch --depth 1 origin "pull/${{ env.PR_NUMBER }}/head"
-          git checkout FETCH_HEAD
+          git fetch --depth 1 origin ${{ env.PR_COMMIT }}
+          if ($LASTEXITCODE -ne 0) { throw "PR commit ${{ env.PR_COMMIT }} could not be fetched" }
+          git -c advice.detachedHead=false checkout FETCH_HEAD
+          $head = (git rev-parse HEAD).Trim()
+          if ($head -ne '${{ env.PR_COMMIT }}') { throw "Unexpected PR commit: $head" }
           git log -1 --format="PR commit: %H | %cd | %an | %s"
+
+      - name: Apply the stability patch (SHA-256 checked)
+        run: |
+          Add-Type -AssemblyName System.IO.Compression
+          $b64 = @'
+          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
+          +enuevpai+KrMqa2M5LTngpT4TiVTXXPnM3PxSvEgZ1FkQ960srtIYD2jimHR+1UpJFucUU/d9TV
+          EKUXPCZXIIG+bhcdZvHPugTIjmbrmsyf5GokFYyirp3Ce5YU34lSVzBF31g3MalCgVTz3LpxSRVR
+          8YwFB2dZdA+THcNx73oxGt3V+u3yOQGbRkberRe3reo5pq6eMuGk10ymCKoto5mirrkJwlV8Glxr
+          KxZDD0pYaCjp9KhWSNsP7lmb1F5/++zmzB9RB+tFHd4aGGMEbLoDGFJJDX0L0/TY3BJVWs1q4teY
+          NUOgvno5e9n1qP5Wm9WnlKbkPcPjoKII6iqpROiBDRzAgcLBqwIKGpQ0vOik7qdts12xsgTktcLg
+          0f/8axmOQwxSraBdUdRoI8R96MUMYFWs7U8WKn2DEAbaXav7xm4Ocioy6EeN6waDeQLlXPC/a64j
+          QonK3HAXSq1bmcr/ND2VjpHAOG3B2PXCb8nahf9zhPmTKQOv7zhZWanD2vKr56Jt7ALeGfusGIzT
+          NeVzrbL+zsGYYmXsazo+Vcy0q7nv8e8OHof+kjPNp32Cp9ahU+vgqekPG5TEAHJBT3bkOOhhaAV7
+          MqqPlor1CW/ZedwxoQq02aRhJTuqctTt3ZzicplxUljjPDmhyL7rr+C0kiKtqbomSU1yuy8uSW59
+          YpX+3800pUKp9rFo/6k1gE9VsIohKzOKLo0f3DfYw4o3t2BwFvbxIlPFnIrK2rQbhyAf1SUgjU7V
+          Y4MAcEIkPsQzt7YpRWEV5PEVjnCc0sXCAl4PhpI9Box0lBsh6P4ZU7uMeQYdJ5bpJu1ASXWAMKE+
+          t8wz9L31e/qHaMGhL/APplplTrDbYlplBT3REQ3Gd6VHNG5YLq7UlPAtz2iAuIYhPuM7PrjpzW8R
+          qVRzVavZVOZMvnFD0A46iZUEfjsYDp7ZHF2ZTr9RXqrWOp3yZsvZtA7ZoCQdMl5ISYeM8FHfS8wt
+          SYVokyQwp3c0d9PJl6C4jWolKfs8QXZo/TkKfFYrzya3XSoJldlMplxJO1R6aNPIaqW6sUpRZHs0
+          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
+          1D0B/x/R91UPj88AAA==
+          '@
+          $gz = [Convert]::FromBase64String(($b64 -replace '\s', ''))
+          $inStream = New-Object System.IO.MemoryStream(,$gz)
+          $unzip = New-Object System.IO.Compression.GZipStream($inStream, [System.IO.Compression.CompressionMode]::Decompress)
+          $outStream = New-Object System.IO.MemoryStream
+          $unzip.CopyTo($outStream)
+          $bytes = $outStream.ToArray()
+          $sha = [System.BitConverter]::ToString([System.Security.Cryptography.SHA256]::Create().ComputeHash($bytes)).Replace('-', '')
+          if ($sha -ne '${{ env.PATCH_SHA256 }}') { throw "PATCH FAILED: the embedded patch is damaged (SHA-256 $sha)" }
+          $patchFile = Join-Path $PWD 'stability.patch'
+          [System.IO.File]::WriteAllBytes($patchFile, $bytes)
+          cd pr
+          git apply --check $patchFile
+          if ($LASTEXITCODE -ne 0) { throw "PATCH FAILED: it does not apply to the pinned PR commit" }
+          git apply $patchFile
+          if ($LASTEXITCODE -ne 0) { throw "PATCH FAILED" }
+          git status --short
+          $n = (Select-String -Path plugins/obs-vst3/*.cpp, plugins/obs-vst3/*.h -Pattern 'user build patch' -SimpleMatch).Count
+          "patch markers in the source: $n"
+          if ($n -lt 35) { throw "PATCH FAILED: too few patch markers ($n)" }
 
       - name: Inject obs-vst3 into OBS ${{ env.OBS_BRANCH }}
         run: |
@@ -49,139 +348,14 @@ jobs:
           Copy-Item -Recurse pr/plugins/obs-vst3 obs-studio/plugins/obs-vst3
           Copy-Item pr/cmake/finders/FindVST3SDK.cmake obs-studio/cmake/finders/FindVST3SDK.cmake
           Add-Content -Path obs-studio/plugins/CMakeLists.txt -Value "`nadd_obs_plugin(obs-vst3 PLATFORMS WINDOWS MACOS LINUX)" -Encoding ascii
-          # NOMINMAX: global in OBS 32.x, missing in 31.x -> required for the 31.0.3 build, harmless for 32.2.2
+          # NOMINMAX: global in OBS 32.x, missing in 31.x
           Add-Content -Path obs-studio/plugins/obs-vst3/CMakeLists.txt -Value "`ntarget_compile_definitions(obs-vst3 PRIVATE NOMINMAX)" -Encoding ascii
 
-      - name: Patch - wait for VST3 scan before loading plug-ins (prevents WaveShell startup crash)
+      - name: Get VST3 SDK ${{ env.VST3SDK_TAG }}
         run: |
-          $f = "obs-studio/plugins/obs-vst3/obs-vst3.cpp"
-          $c = [System.IO.File]::ReadAllText($f)
-          $a1 = 'static std::thread vst3ScanThread;'
-          $a2 = 'if (!list->getPathById(vst3PluginId).empty()) {'
-          if (($c.Split($a1).Count -ne 2) -or ($c.Split($a2).Count -ne 2)) { throw "PATCH FAILED: anchor not found exactly once (PR code changed?)" }
-          $helper = @'
-          static std::thread vst3ScanThread;
-
-          // [user build patch] Never initialise a VST3 module while the scanner thread may be loading the same module.
-          // Shell plug-ins such as Waves' WaveShell crash when two threads run their module init at the same time.
-          static void waitForVst3Scan()
-          {
-          	// No time limit: a plug-in is never loaded while the scan is still running.
-          	auto lastLog = std::chrono::steady_clock::now();
-          	while (!vst3ScanDone.load(std::memory_order_acquire)) {
-          		std::this_thread::sleep_for(std::chrono::milliseconds(20));
-          		if (std::chrono::steady_clock::now() - lastLog >= std::chrono::seconds(30)) {
-          			blog(LOG_WARNING, "[obs-vst3 patch] still waiting for the VST3 scan to finish before loading plug-ins");
-          			lastLog = std::chrono::steady_clock::now();
-          		}
-          	}
-          }
-          '@
-          $c = $c.Replace($a1, $helper.Trim())
-          $c = $c.Replace($a2, "waitForVst3Scan();`n`t`t" + $a2)
-          [System.IO.File]::WriteAllText($f, $c, (New-Object System.Text.UTF8Encoding($false)))
-          Select-String -Path $f -Pattern "waitForVst3Scan" | ForEach-Object { $_.LineNumber.ToString() + ": " + $_.Line.Trim() }
-
-      - name: Patch - cache Waves class list, rescan only when the module file changes
-        run: |
-          $f = "obs-studio/plugins/obs-vst3/obs-vst3.cpp"
-          $c = [System.IO.File]::ReadAllText($f)
-          $pairs = New-Object System.Collections.ArrayList
-          $A0 = @'
-          static void vst3CacheSave()
-          '@
-          $H0 = @'
-          // [user build patch] Module file fingerprint (size + last write time) so that modules flagged
-          // kClassesDiscardable (e.g. Waves WaveShell) can be cached and are only rescanned when the file changes.
-          static std::pair<long long, long long> vst3ModuleFingerprint(const std::string &path)
-          {
-          	std::error_code ec;
-          	const std::filesystem::path fp(path);
-          	if (std::filesystem::is_regular_file(fp, ec))
-          		return {(long long)std::filesystem::file_size(fp, ec),
-          			(long long)std::filesystem::last_write_time(fp, ec).time_since_epoch().count()};
-          	return {0, 0};
-          }
-
-          static bool vst3ModuleChanged(const std::unordered_map<std::string, std::pair<long long, long long>> &fingerprints,
-          			      const std::string &modulePath)
-          {
-          	const auto it = fingerprints.find(modulePath);
-          	if (it == fingerprints.end())
-          		return true;
-          	const auto now = vst3ModuleFingerprint(modulePath);
-          	return now.first == 0 || now != it->second;
-          }
-
-          static void vst3CacheSave()
-          '@
-          [void]$pairs.Add(@($A0, $H0))
-          $A1 = @'
-          obs_data_set_bool(obj, "isFX", p.isFX);
-          '@
-          $H1 = @'
-          obs_data_set_bool(obj, "isFX", p.isFX);
-          		{ // [user build patch] module file fingerprint
-          			const auto fpv = vst3ModuleFingerprint(p.path);
-          			obs_data_set_int(obj, "fsize", fpv.first);
-          			obs_data_set_int(obj, "mtime", fpv.second);
-          		}
-          '@
-          [void]$pairs.Add(@($A1, $H1))
-          $A2 = @'
-          std::unordered_map<std::string, ModuleCache> modules;
-          '@
-          $H2 = @'
-          std::unordered_map<std::string, ModuleCache> modules;
-          	std::unordered_map<std::string, std::pair<long long, long long>> fingerprints; // [user build patch]
-          '@
-          [void]$pairs.Add(@($A2, $H2))
-          $A3 = @'
-          classInfo.isFX = obs_data_get_bool(obj, "isFX");
-          '@
-          $H3 = @'
-          classInfo.isFX = obs_data_get_bool(obj, "isFX");
-          		fingerprints[classInfo.path] = {obs_data_get_int(obj, "fsize"), obs_data_get_int(obj, "mtime")}; // [user build patch]
-          '@
-          [void]$pairs.Add(@($A3, $H3))
-          $A4 = @'
-          list->addModuleClasses(modulePath);
-          '@
-          $H4 = @'
-          // [user build patch] reuse the cached class list while the module file is unchanged
-          			if (vst3ModuleChanged(fingerprints, modulePath)) {
-          				list->addModuleClasses(modulePath);
-          			} else {
-          				blog(LOG_INFO, "[obs-vst3 patch] Using cached class list for %s (module file unchanged)", modulePath.c_str());
-          				for (auto &classInfo : m.classes) {
-          					list->pluginList.push_back(classInfo);
-          					++list->classCount[modulePath];
-          				}
-          			}
-          '@
-          [void]$pairs.Add(@($A4, $H4))
-          foreach ($p in $pairs) {
-            $n = $c.Split($p[0]).Count - 1
-            if ($n -ne 1) { throw ("CACHE PATCH FAILED: anchor found " + $n + " times: " + $p[0]) }
-            $c = $c.Replace($p[0], $p[1])
-          }
-          [System.IO.File]::WriteAllText($f, $c, (New-Object System.Text.UTF8Encoding($false)))
-          Select-String -Path $f -Pattern "user build patch" | ForEach-Object { $_.LineNumber.ToString() + ": " + $_.Line.Trim() }
-
-      - name: Patch - make the Rescan button incremental (safe while Waves plug-ins are loaded)
-        run: |
-          $f = "obs-studio/plugins/obs-vst3/obs-vst3.cpp"
-          $c = [System.IO.File]::ReadAllText($f)
-          $a = 'std::thread(scanVst3List, false)'
-          $n = $c.Split($a).Count - 1
-          if ($n -ne 1) { throw ("RESCAN PATCH FAILED: anchor found " + $n + " times") }
-          $c = $c.Replace($a, 'std::thread(scanVst3List, true) /* [user build patch] incremental rescan: new/removed modules + changed shells only */')
-          [System.IO.File]::WriteAllText($f, $c, (New-Object System.Text.UTF8Encoding($false)))
-          Select-String -Path $f -Pattern "incremental rescan" | ForEach-Object { $_.LineNumber.ToString() + ": " + $_.Line.Trim() }
-
-      - name: Get VST3 SDK
-        run: |
-          git clone --recursive --depth 1 --shallow-submodules https://github.com/steinbergmedia/vst3sdk.git obs-studio/plugins/obs-vst3/sdk
+          git -c advice.detachedHead=false clone --recursive --depth 1 --shallow-submodules --branch ${{ env.VST3SDK_TAG }} https://github.com/steinbergmedia/vst3sdk.git obs-studio/plugins/obs-vst3/sdk
+          if ($LASTEXITCODE -ne 0) { throw "VST3 SDK clone failed" }
+          Select-String -Path obs-studio/plugins/obs-vst3/sdk/pluginterfaces/vst/vsttypes.h -Pattern 'define kVstVersionString' | ForEach-Object { $_.Line.Trim() }
 
       - name: Configure CMake
         run: |
@@ -192,11 +366,13 @@ jobs:
             -DCMAKE_C_FLAGS="/DWIN32 /D_WINDOWS /WX-" `
             -DCMAKE_CXX_FLAGS="/DWIN32 /D_WINDOWS /EHsc /GR /WX-" `
             -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF
+          if ($LASTEXITCODE -ne 0) { throw "CMake configure failed" }
 
       - name: Build (only the obs-vst3 target)
         run: |
           cd obs-studio
           cmake --build build_x64 --config ${{ env.BUILD_TYPE }} --target obs-vst3
+          if ($LASTEXITCODE -ne 0) { throw "Build failed" }
 
       - name: Package (same layout as C:\Program Files\obs-studio)
         run: |
@@ -204,16 +380,21 @@ jobs:
           New-Item -ItemType Directory -Force "$out/obs-plugins/64bit" | Out-Null
           New-Item -ItemType Directory -Force "$out/data/obs-plugins/obs-vst3" | Out-Null
           $dll = Get-ChildItem -Recurse obs-studio/build_x64 -Filter obs-vst3.dll | Select-Object -First 1
-          if (-not $dll) { throw "obs-vst3.dll bulunamadi" }
+          if (-not $dll) { throw "obs-vst3.dll not found" }
+          $text = [System.Text.Encoding]::ASCII.GetString([System.IO.File]::ReadAllBytes($dll.FullName))
+          foreach ($m in @('[obs-vst3 patch] VST3 module loaded once', 'crashed during %s', 'loading the VST3 plug-in again', 'still waiting for the VST3 scan')) {
+            if (-not $text.Contains($m)) { throw "DLL check failed, missing: $m" }
+          }
           Copy-Item $dll.FullName "$out/obs-plugins/64bit/"
           $pdb = Get-ChildItem -Recurse obs-studio/build_x64 -Filter obs-vst3.pdb | Select-Object -First 1
           if ($pdb) { Copy-Item $pdb.FullName "$out/obs-plugins/64bit/" }
           Copy-Item -Recurse "obs-studio/plugins/obs-vst3/data/*" "$out/data/obs-plugins/obs-vst3/"
           Get-ChildItem -Recurse $out | ForEach-Object { $_.FullName }
+          Get-FileHash "$out/obs-plugins/64bit/obs-vst3.dll" -Algorithm SHA256 | Format-List
 
       - name: Upload artifact
         uses: actions/upload-artifact@v6
         with:
-          name: obs-vst3-PR12752-scanwait-wcache-rescan-OBS${{ matrix.obs_version }}-windows-x64
+          name: obs-vst3-saglam-OBS${{ matrix.obs_version }}-windows-x64
           path: package/
           if-no-files-found: error
