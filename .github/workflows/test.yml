@@ -25,7 +25,7 @@ jobs:
         shell: pwsh
     steps:
       - name: Check out the test files
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Clone OBS Studio
         run: |
@@ -44,9 +44,13 @@ jobs:
           git fetch --depth 1 origin $env:PR_COMMIT
           if ($LASTEXITCODE -ne 0) { throw "PR commit could not be fetched" }
           git -c advice.detachedHead=false checkout FETCH_HEAD
-          git apply --check ../vst3test/base.patch
-          if ($LASTEXITCODE -ne 0) { Write-Output "::error::base.patch does not apply"; throw "base.patch" }
-          git apply ../vst3test/base.patch
+          # the patch must keep LF line endings, whatever Git for Windows did on checkout
+          $patch = [System.IO.File]::ReadAllText((Resolve-Path ../vst3test/base.patch)).Replace("`r`n", "`n")
+          $patchFile = Join-Path $env:RUNNER_TEMP 'base.patch'
+          [System.IO.File]::WriteAllText($patchFile, $patch, (New-Object System.Text.UTF8Encoding($false)))
+          $check = git apply --check $patchFile 2>&1 | Out-String
+          if ($LASTEXITCODE -ne 0) { Write-Output ("::error::base.patch does not apply: " + $check.Trim()); throw "base.patch" }
+          git apply $patchFile
 
       - name: Inject the previous obs-vst3 and the test tools into OBS
         run: |
