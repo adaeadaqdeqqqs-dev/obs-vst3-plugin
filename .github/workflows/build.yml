@@ -392,7 +392,7 @@ jobs:
           $unzip.CopyTo($outStream)
           $bytes = $outStream.ToArray()
           $sha = [System.BitConverter]::ToString([System.Security.Cryptography.SHA256]::Create().ComputeHash($bytes)).Replace('-', '')
-          if ($sha -ne '${{ env.PATCH_SHA256 }}') { Fail "PATCH FAILED: the embedded patch is damaged (SHA-256 $sha)" }
+          if ($sha -ne $env:PATCH_SHA256) { Fail "PATCH FAILED: the embedded patch is damaged (SHA-256 $sha)" }
           $patchFile = Join-Path $PWD 'stability.patch'
           [System.IO.File]::WriteAllBytes($patchFile, $bytes)
           cd pr
