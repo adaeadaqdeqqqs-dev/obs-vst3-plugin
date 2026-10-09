@@ -29,6 +29,9 @@ env:
   VST3SDK_TAG: v3.8.1_build_84
   PATCH_SHA256: 83A5BA475D8739820C2E0A3AB32147F04CA6E56671CC7B2300CDF3EF65289AB4
 
+permissions:
+  contents: write
+
 jobs:
   build-windows:
     runs-on: windows-2022
@@ -53,6 +56,7 @@ jobs:
           git init pr
           cd pr
           git config core.autocrlf false
+          git config core.eol lf
           git remote add origin ${{ env.OBS_REPO }}
           git config core.sparseCheckout true
           Set-Content -Path .git/info/sparse-checkout -Value @('/plugins/obs-vst3/', '/cmake/finders/FindVST3SDK.cmake') -Encoding ascii
@@ -65,6 +69,7 @@ jobs:
 
       - name: Apply the stability patch (SHA-256 checked)
         run: |
+          function Fail([string]$m) { Write-Output "::error::$m"; throw $m }
           Add-Type -AssemblyName System.IO.Compression
           $b64 = @'
           H4sIAAAAAAAC/91921IbSZrwNTxFmo1xS1ZJCHEWDbM0BzcxGDyAu3vCv0NRklKoBlGlqSqBGTcb
@@ -329,18 +334,20 @@ jobs:
           $unzip.CopyTo($outStream)
           $bytes = $outStream.ToArray()
           $sha = [System.BitConverter]::ToString([System.Security.Cryptography.SHA256]::Create().ComputeHash($bytes)).Replace('-', '')
-          if ($sha -ne '${{ env.PATCH_SHA256 }}') { throw "PATCH FAILED: the embedded patch is damaged (SHA-256 $sha)" }
+          if ($sha -ne '${{ env.PATCH_SHA256 }}') { Fail "PATCH FAILED: the embedded patch is damaged (SHA-256 $sha)" }
           $patchFile = Join-Path $PWD 'stability.patch'
           [System.IO.File]::WriteAllBytes($patchFile, $bytes)
           cd pr
-          git apply --check $patchFile
-          if ($LASTEXITCODE -ne 0) { throw "PATCH FAILED: it does not apply to the pinned PR commit" }
+          $eol = if ([System.IO.File]::ReadAllText((Join-Path $PWD 'plugins/obs-vst3/obs-vst3.h')).Contains("`r`n")) { 'CRLF' } else { 'LF' }
+          "PR files line endings: $eol"
+          $check = git apply --check $patchFile 2>&1 | Out-String
+          if ($LASTEXITCODE -ne 0) { Fail ("PATCH FAILED: it does not apply to the pinned PR commit ($eol): " + $check.Trim()) }
           git apply $patchFile
-          if ($LASTEXITCODE -ne 0) { throw "PATCH FAILED" }
+          if ($LASTEXITCODE -ne 0) { Fail "PATCH FAILED: git apply" }
           git status --short
           $n = (Select-String -Path plugins/obs-vst3/*.cpp, plugins/obs-vst3/*.h -Pattern 'user build patch' -SimpleMatch).Count
           "patch markers in the source: $n"
-          if ($n -lt 35) { throw "PATCH FAILED: too few patch markers ($n)" }
+          if ($n -lt 35) { Fail "PATCH FAILED: too few patch markers ($n)" }
 
       - name: Inject obs-vst3 into OBS ${{ env.OBS_BRANCH }}
         run: |
@@ -366,13 +373,17 @@ jobs:
             -DCMAKE_C_FLAGS="/DWIN32 /D_WINDOWS /WX-" `
             -DCMAKE_CXX_FLAGS="/DWIN32 /D_WINDOWS /EHsc /GR /WX-" `
             -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF
-          if ($LASTEXITCODE -ne 0) { throw "CMake configure failed" }
+          if ($LASTEXITCODE -ne 0) { Write-Output "::error::CMake configure failed"; throw "CMake configure failed" }
 
       - name: Build (only the obs-vst3 target)
         run: |
           cd obs-studio
-          cmake --build build_x64 --config ${{ env.BUILD_TYPE }} --target obs-vst3
-          if ($LASTEXITCODE -ne 0) { throw "Build failed" }
+          cmake --build build_x64 --config ${{ env.BUILD_TYPE }} --target obs-vst3 2>&1 | Tee-Object -Variable buildOut | Out-Host
+          if ($LASTEXITCODE -ne 0) {
+            $buildOut | ForEach-Object { "$_" } | Select-String -Pattern 'error C\d{4}|error LNK\d{4}|fatal error|error MSB\d{4}' |
+              Select-Object -First 12 | ForEach-Object { Write-Output ("::error::" + $_.Line.Trim()) }
+            throw "Build failed"
+          }
 
       - name: Package (same layout as C:\Program Files\obs-studio)
         run: |
@@ -391,6 +402,17 @@ jobs:
           Copy-Item -Recurse "obs-studio/plugins/obs-vst3/data/*" "$out/data/obs-plugins/obs-vst3/"
           Get-ChildItem -Recurse $out | ForEach-Object { $_.FullName }
           Get-FileHash "$out/obs-plugins/64bit/obs-vst3.dll" -Algorithm SHA256 | Format-List
+
+      - name: Publish the package to branch vst3-cikti-OBS${{ matrix.obs_version }}
+        run: |
+          cd package
+          git init -q -b cikti
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "obs-vst3 for OBS ${{ matrix.obs_version }} (workflow commit ${{ github.sha }})"
+          git push -q --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:refs/heads/vst3-cikti-OBS${{ matrix.obs_version }}"
+          if ($LASTEXITCODE -ne 0) { Write-Output "::warning::could not publish the package branch (the artifact below still has it)" }
 
       - name: Upload artifact
         uses: actions/upload-artifact@v6
