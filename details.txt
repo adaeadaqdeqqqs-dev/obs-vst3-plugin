@@ -1,0 +1,82 @@
+base  basic              RESULT gain-ratio=0.1250 (expected 0.125)
+base  basic              RESULT plugin-process-calls ftz-on=0 ftz-off=753
+base  swap               RESULT gain-ratio=0.5000 (expected 0.5)
+base  swap               RESULT plugin-process-calls ftz-on=0 ftz-off=315
+base  restart_audio      RESULT gain-ratio=0.5000 (expected ~0.5)
+base  restart_audio      RESULT plugin-process-calls ftz-on=0 ftz-off=400
+base  init_retry         RESULT gain-before-retry=1.0002 (expected 1.0 = pass-through)
+base  init_retry         RESULT gain-after-retry=1.0000 (expected 0.5)
+base  init_retry         RESULT plugin-process-calls ftz-on=0 ftz-off=0
+base  nan                RESULT plugin-process-calls ftz-on=0 ftz-off=200
+base  state              RESULT gain-ratio=0.2500 (expected 0.25)
+base  state              RESULT plugin-process-calls ftz-on=0 ftz-off=200
+base  state_retry        RESULT gain-ratio=0.5000 (expected 0.25)
+base  state_retry        RESULT plugin-process-calls ftz-on=0 ftz-off=550
+base  state_reject       RESULT gain-ratio=0.5000 (expected 0.5, defaults)
+base  state_reject       RESULT plugin-process-calls ftz-on=0 ftz-off=1650
+base  rescan             RESULT plugin-process-calls ftz-on=0 ftz-off=192
+base  stress             RESULT plugin-process-calls ftz-on=0 ftz-off=1272
+base  quality_1          RESULT filters=1 seconds=20 samples-identical=960442 samples-different=0 relocks=0 unmatched=0 channel-swaps=0
+base  quality_1          RESULT host-time-per-packet avg=25.3us max=58.0us (1 filters)
+base  quality_1          RESULT plugin-process-calls ftz-on=0 ftz-off=2250
+base  quality_16         RESULT filters=16 seconds=20 samples-identical=960210 samples-different=0 relocks=0 unmatched=0 channel-swaps=0
+base  quality_16         RESULT host-time-per-packet avg=275.8us max=497.0us (16 filters)
+base  quality_16         RESULT plugin-process-calls ftz-on=0 ftz-off=35773
+base  soak               RESULT soak-done seconds=600 saves=298 properties=85 switches=59 rescans=9 restarts=931
+base  soak               RESULT soak-audio identical=28798798 different=36 relocks=36 unmatched=0
+base  soak               RESULT soak-memory start=42832KB end=44072KB max=44080KB handles start=1170 end=1177 max=1179
+base  soak               RESULT soak-final identical=240718 different=0
+base  soak               RESULT plugin-process-calls ftz-on=0 ftz-off=975029
+base  shell_rescan       RESULT plugin-process-calls ftz-on=0 ftz-off=192
+base  shell_next_start   RESULT plugin-process-calls ftz-on=0 ftz-off=0
+base  shell_cached       RESULT plugin-process-calls ftz-on=0 ftz-off=0
+new   basic              RESULT gain-ratio=0.1250 (expected 0.125)
+new   basic              RESULT plugin-process-calls ftz-on=750 ftz-off=0
+new   swap               RESULT gain-ratio=0.5000 (expected 0.5)
+new   swap               RESULT plugin-process-calls ftz-on=330 ftz-off=0
+new   restart_audio      RESULT gain-ratio=0.5000 (expected ~0.5)
+new   restart_audio      RESULT plugin-process-calls ftz-on=400 ftz-off=0
+new   restart_in_active  RESULT gain-ratio=0.5000 (expected ~0.5)
+new   restart_in_active  RESULT plugin-process-calls ftz-on=400 ftz-off=0
+new   init_retry         RESULT gain-before-retry=1.0000 (expected 1.0 = pass-through)
+new   init_retry         RESULT gain-after-retry=0.5000 (expected 0.5)
+new   init_retry         RESULT plugin-process-calls ftz-on=399 ftz-off=0
+new   nan                RESULT plugin-process-calls ftz-on=200 ftz-off=0
+new   state              RESULT gain-ratio=0.2500 (expected 0.25)
+new   state              RESULT plugin-process-calls ftz-on=200 ftz-off=0
+new   state_retry        RESULT gain-ratio=0.2500 (expected 0.25)
+new   state_retry        RESULT plugin-process-calls ftz-on=550 ftz-off=0
+new   state_reject       RESULT gain-ratio=0.5000 (expected 0.5, defaults)
+new   state_reject       RESULT plugin-process-calls ftz-on=1650 ftz-off=0
+new   rescan             RESULT plugin-process-calls ftz-on=192 ftz-off=0
+new   stress             RESULT plugin-process-calls ftz-on=1683 ftz-off=0
+new   crash_process      RESULT gain-before-crash=0.3378 (expected 0.25)
+new   crash_process      RESULT harness-alive-after-crash=1 gain-after-crash=0.5000 (expected 0.5)
+new   crash_process      RESULT error-text=The VST3 plug-in crashed and was disabled.
+new   crash_process      RESULT plugin-process-calls ftz-on=801 ftz-off=0
+new   throw_process      RESULT gain-before-crash=0.3378 (expected 0.25)
+new   throw_process      RESULT harness-alive-after-crash=1 gain-after-crash=0.5000 (expected 0.5)
+new   throw_process      RESULT error-text=The VST3 plug-in crashed and was disabled.
+new   throw_process      RESULT plugin-process-calls ftz-on=801 ftz-off=0
+new   crash_init         RESULT harness-alive-after-crash=1 error-text=The VST3 plug-in crashed and was disabled.
+new   crash_init         RESULT gain=0.5000 (expected 0.5: f1 passes audio, f2 processes)
+new   crash_init         RESULT plugin-process-calls ftz-on=620 ftz-off=0
+new   crash_setstate     RESULT harness-alive-after-crash=1 error-text=The VST3 plug-in crashed and was disabled.
+new   crash_setstate     RESULT gain=0.5000 (expected 0.5: f1 passes audio, f2 processes)
+new   crash_setstate     RESULT plugin-process-calls ftz-on=620 ftz-off=0
+new   crash_initdll      RESULT harness-alive-after-scan=1 classes-found=0
+new   crash_initdll      RESULT plugin-process-calls ftz-on=0 ftz-off=0
+new   quality_1          RESULT filters=1 seconds=20 samples-identical=960442 samples-different=0 relocks=0 unmatched=0 channel-swaps=0
+new   quality_1          RESULT host-time-per-packet avg=26.2us max=65.4us (1 filters)
+new   quality_1          RESULT plugin-process-calls ftz-on=2249 ftz-off=0
+new   quality_16         RESULT filters=16 seconds=20 samples-identical=959610 samples-different=0 relocks=0 unmatched=0 channel-swaps=0
+new   quality_16         RESULT host-time-per-packet avg=289.9us max=547.7us (16 filters)
+new   quality_16         RESULT plugin-process-calls ftz-on=35773 ftz-off=0
+new   soak               RESULT soak-done seconds=1200 saves=597 properties=170 switches=119 rescans=19 restarts=1861
+new   soak               RESULT soak-audio identical=57606474 different=0 relocks=0 unmatched=0
+new   soak               RESULT soak-memory start=42928KB end=43048KB max=43116KB handles start=1170 end=1179 max=1181
+new   soak               RESULT soak-final identical=240149 different=0
+new   soak               RESULT plugin-process-calls ftz-on=1935078 ftz-off=0
+new   shell_rescan       RESULT plugin-process-calls ftz-on=192 ftz-off=0
+new   shell_next_start   RESULT plugin-process-calls ftz-on=0 ftz-off=0
+new   shell_cached       RESULT plugin-process-calls ftz-on=0 ftz-off=0

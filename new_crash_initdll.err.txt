@@ -1,0 +1,1 @@
+error: [VST3 Scanner] D:\a\_temp\h_new_crash_initdll\Programs\Common\VST3\OBSTestFX.vst3 crashed while being scanned (exception 0xC0000005); skipped

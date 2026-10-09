@@ -1,0 +1,2069 @@
+info: CPU Name: AMD EPYC 9V74 80-Core Processor                
+info: CPU Speed: 2596MHz
+info: Physical Cores: 2, Logical Cores: 4
+info: Physical Memory: 16378MB Total, 13771MB Free
+info: Windows Version: 10.0 Build 20348 (release: 21H2; revision: 5622; 64-bit)
+info: Running as administrator: true
+info: Windows 10/11 Gaming Features:
+info: 	Game Mode: Probably On (no reg key set)
+info: ---------------------------------
+info: audio settings reset:
+	samples per sec: 48000
+	speakers:        2
+	max buffering:   960 milliseconds
+	buffering type:  dynamically increasing
+debug: ---------------------------------
+debug: Loading module: obs-vst3.dll
+info: OBS-VST3 filter loaded successfully (version 1.0.0)
+debug: private source 'probe' (vst3_filter) created
+info: [VST3 Scanner] Available plugins:
+info: [VST3 Scanner]   OBSTestFX A
+info: [VST3 Scanner]   OBSTestFX B
+info: [VST3 Scanner] Completed scan in 0 ms, found 2 plugins
+CHECK initial VST3 scan finished                                 ok
+RESULT harness-alive=1 obs-version=31.0.4
+CHECK test plug-in classes found by the scanner                  ok
+RESULT after-scan entry=1 exit=1 procs=0 terminated=0 process=0 violations=0 inactive=0 offmain=0 activations=0 restartsReq=0 lastKind=0
+debug: source 'mic' (test_audio_src) created
+info: [VST3 filter ('k0')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k0')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k0')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k0' (vst3_filter) created
+debug: - filter 'k0' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k1')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k1')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k1')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k1' (vst3_filter) created
+debug: - filter 'k1' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k2')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k2')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k2')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k2' (vst3_filter) created
+debug: - filter 'k2' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k3')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k3')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k3')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k3' (vst3_filter) created
+debug: - filter 'k3' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k4')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k4')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k4')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k4' (vst3_filter) created
+debug: - filter 'k4' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k5')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k5')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k5')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k5' (vst3_filter) created
+debug: - filter 'k5' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k6')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k6')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k6')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k6' (vst3_filter) created
+debug: - filter 'k6' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k7')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k7')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k7')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k7' (vst3_filter) created
+debug: - filter 'k7' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k8')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k8')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k8')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k8' (vst3_filter) created
+debug: - filter 'k8' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k9')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k9')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k9')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k9' (vst3_filter) created
+debug: - filter 'k9' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k10')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k10')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k10')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k10' (vst3_filter) created
+debug: - filter 'k10' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k11')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k11')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k11')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k11' (vst3_filter) created
+debug: - filter 'k11' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k12')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k12')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k12')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k12' (vst3_filter) created
+debug: - filter 'k12' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k13')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k13')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k13')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k13' (vst3_filter) created
+debug: - filter 'k13' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k14')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k14')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k14')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k14' (vst3_filter) created
+debug: - filter 'k14' (vst3_filter) added to source 'mic'
+info: [VST3 filter ('k15')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k15')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k15')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+debug: private source 'k15' (vst3_filter) created
+debug: - filter 'k15' (vst3_filter) added to source 'mic'
+debug: Audio timestamp for 'mic' exceeded TS_SMOOTHING_THRESHOLD, diff=160000000 ns, expected 1515823688000, input 1515663688000
+info: adding 469 milliseconds of audio buffering, total audio buffering is now 469 milliseconds (source: mic)
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=10s memory=42832KB handles=1170 identical=481380 different=0 relocks=0
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k1')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k1')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k1')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=20s memory=42832KB handles=1170 identical=962944 different=0 relocks=0
+info: [VST3 filter ('k1')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k1')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k1')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=30s memory=42832KB handles=1170 identical=1444604 different=0 relocks=0
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k2')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k2')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k2')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=40s memory=42832KB handles=1170 identical=1925643 different=0 relocks=0
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k2')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k2')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k2')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=50s memory=42832KB handles=1170 identical=2407374 different=3 relocks=3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k3')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k3')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k3')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Scanner] Available plugins:
+info: [VST3 Scanner]   OBSTestFX A
+info: [VST3 Scanner]   OBSTestFX B
+info: [VST3 Scanner] Loaded cache & non-cacheable VST3s in 0 ms, found 2 plugins
+RESULT soak t=60s memory=42776KB handles=1178 identical=2889834 different=3 relocks=3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k3')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k3')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k3')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=70s memory=42776KB handles=1178 identical=3366000 different=6 relocks=6
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k4')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k4')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k4')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=80s memory=42776KB handles=1178 identical=3848044 different=6 relocks=6
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k4')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k4')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k4')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=90s memory=43900KB handles=1179 identical=4328744 different=6 relocks=6
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k5')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k5')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k5')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=100s memory=43900KB handles=1179 identical=4809783 different=6 relocks=6
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k5')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k5')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k5')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=110s memory=43900KB handles=1179 identical=5291322 different=6 relocks=6
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k6')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k6')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k6')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Scanner] Available plugins:
+info: [VST3 Scanner]   OBSTestFX A
+info: [VST3 Scanner]   OBSTestFX B
+info: [VST3 Scanner] Loaded cache & non-cacheable VST3s in 0 ms, found 2 plugins
+RESULT soak t=120s memory=43876KB handles=1179 identical=5773374 different=6 relocks=6
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k6')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k6')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k6')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=130s memory=43876KB handles=1179 identical=6255418 different=6 relocks=6
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k7')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k7')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k7')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=140s memory=43876KB handles=1179 identical=6734761 different=6 relocks=6
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k7')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k7')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k7')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=150s memory=43876KB handles=1179 identical=7216236 different=6 relocks=6
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k8')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k8')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k8')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=161s memory=43876KB handles=1179 identical=7698696 different=6 relocks=6
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k8')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k8')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k8')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=171s memory=43876KB handles=1179 identical=8180140 different=9 relocks=9
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k9')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k9')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k9')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Scanner] Available plugins:
+info: [VST3 Scanner]   OBSTestFX A
+info: [VST3 Scanner]   OBSTestFX B
+info: [VST3 Scanner] Loaded cache & non-cacheable VST3s in 0 ms, found 2 plugins
+RESULT soak t=181s memory=43876KB handles=1179 identical=8662792 different=9 relocks=9
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k9')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k9')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k9')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=191s memory=43876KB handles=1179 identical=9144004 different=9 relocks=9
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k10')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k10')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k10')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=201s memory=43816KB handles=1177 identical=9624787 different=9 relocks=9
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k10')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k10')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k10')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=211s memory=43816KB handles=1177 identical=10106262 different=9 relocks=9
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k11')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k11')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k11')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=221s memory=43816KB handles=1177 identical=10588122 different=9 relocks=9
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k11')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k11')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k11')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=231s memory=43816KB handles=1177 identical=11070166 different=9 relocks=9
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k12')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k12')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k12')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Scanner] Available plugins:
+info: [VST3 Scanner]   OBSTestFX A
+info: [VST3 Scanner]   OBSTestFX B
+info: [VST3 Scanner] Loaded cache & non-cacheable VST3s in 0 ms, found 2 plugins
+RESULT soak t=241s memory=43816KB handles=1177 identical=11552818 different=9 relocks=9
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k12')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k12')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k12')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=251s memory=43816KB handles=1177 identical=12034030 different=12 relocks=12
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k13')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k13')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k13')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=261s memory=43816KB handles=1177 identical=12514813 different=12 relocks=12
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k13')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k13')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k13')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=271s memory=43816KB handles=1177 identical=12996288 different=15 relocks=15
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k14')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k14')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k14')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=281s memory=43816KB handles=1177 identical=13478148 different=15 relocks=15
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k14')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k14')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k14')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=291s memory=43816KB handles=1177 identical=13960320 different=18 relocks=18
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k15')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k15')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k15')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Scanner] Available plugins:
+info: [VST3 Scanner]   OBSTestFX A
+info: [VST3 Scanner]   OBSTestFX B
+info: [VST3 Scanner] Loaded cache & non-cacheable VST3s in 0 ms, found 2 plugins
+RESULT soak t=301s memory=43852KB handles=1177 identical=14442844 different=18 relocks=18
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k15')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k15')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k15')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak t=311s memory=43852KB handles=1177 identical=14924056 different=21 relocks=21
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k0')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k0')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k0')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=321s memory=43852KB handles=1177 identical=15404839 different=21 relocks=21
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k0')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k0')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k0')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=331s memory=43852KB handles=1177 identical=15887235 different=24 relocks=24
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k1')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k1')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k1')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=341s memory=43852KB handles=1177 identical=16368966 different=24 relocks=24
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k1')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k1')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k1')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=351s memory=43852KB handles=1177 identical=16851426 different=24 relocks=24
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k2')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k2')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k2')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Scanner] Available plugins:
+info: [VST3 Scanner]   OBSTestFX A
+info: [VST3 Scanner]   OBSTestFX B
+info: [VST3 Scanner] Loaded cache & non-cacheable VST3s in 0 ms, found 2 plugins
+RESULT soak t=361s memory=43852KB handles=1177 identical=17333478 different=24 relocks=24
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k2')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k2')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k2')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=371s memory=44080KB handles=1177 identical=17815522 different=24 relocks=24
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k3')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k3')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k3')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=381s memory=44080KB handles=1177 identical=18296734 different=24 relocks=24
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k3')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k3')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k3')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=391s memory=44080KB handles=1177 identical=18777517 different=24 relocks=24
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k4')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k4')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k4')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=401s memory=44044KB handles=1177 identical=19258992 different=24 relocks=24
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k4')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k4')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k4')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=411s memory=44044KB handles=1177 identical=19740372 different=24 relocks=24
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k5')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k5')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k5')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Scanner] Available plugins:
+info: [VST3 Scanner]   OBSTestFX A
+info: [VST3 Scanner]   OBSTestFX B
+info: [VST3 Scanner] Loaded cache & non-cacheable VST3s in 0 ms, found 2 plugins
+RESULT soak t=421s memory=44044KB handles=1177 identical=20223504 different=24 relocks=24
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k5')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k5')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k5')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=431s memory=44044KB handles=1177 identical=20705548 different=24 relocks=24
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k6')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k6')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k6')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=442s memory=44044KB handles=1177 identical=21186760 different=24 relocks=24
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k6')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k6')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k6')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=452s memory=44044KB handles=1177 identical=21667287 different=30 relocks=30
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k7')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k7')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k7')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=462s memory=44044KB handles=1177 identical=22149018 different=30 relocks=30
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k7')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k7')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k7')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=472s memory=44044KB handles=1177 identical=22630878 different=30 relocks=30
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k8')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k8')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k8')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Scanner] Available plugins:
+info: [VST3 Scanner]   OBSTestFX A
+info: [VST3 Scanner]   OBSTestFX B
+info: [VST3 Scanner] Loaded cache & non-cacheable VST3s in 0 ms, found 2 plugins
+RESULT soak t=482s memory=44044KB handles=1177 identical=23113530 different=30 relocks=30
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k8')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k8')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k8')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=492s memory=44044KB handles=1177 identical=23595574 different=33 relocks=33
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k9')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k9')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k9')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=502s memory=44044KB handles=1177 identical=24076274 different=33 relocks=33
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k9')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k9')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k9')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=512s memory=44044KB handles=1177 identical=24557313 different=33 relocks=33
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k10')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k10')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k10')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=522s memory=44044KB handles=1177 identical=25039044 different=33 relocks=33
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k10')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k10')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k10')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=532s memory=44044KB handles=1177 identical=25520904 different=33 relocks=33
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k11')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k11')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k11')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Scanner] Available plugins:
+info: [VST3 Scanner]   OBSTestFX A
+info: [VST3 Scanner]   OBSTestFX B
+info: [VST3 Scanner] Loaded cache & non-cacheable VST3s in 0 ms, found 2 plugins
+RESULT soak t=542s memory=44044KB handles=1177 identical=26003076 different=33 relocks=33
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k11')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k11')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k11')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=552s memory=44044KB handles=1177 identical=26485600 different=33 relocks=33
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k12')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k12')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k12')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=562s memory=44044KB handles=1177 identical=26965967 different=33 relocks=33
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k12')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k12')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k12')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=572s memory=44044KB handles=1177 identical=27446898 different=33 relocks=33
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k13')]: filter applied: OBSTestFX A, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k13')]: Plugin OBSTestFX A was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k13')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=582s memory=44044KB handles=1177 identical=27929070 different=33 relocks=33
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k13')]: filter applied: OBSTestFX B, path: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+info: [VST3 Plugin:] Input audio buses: 1
+ Output audio buses: 1
+
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 filter ('k13')]: Plugin OBSTestFX B was successfully initialized.
+info: [VST3 Plugin:] EditController does not provide its own view
+info: [VST3 filter ('k13')]: Failed to create editor view for plugin at: D:\a\_temp\h_base_soak\Programs\Common\VST3\OBSTestFX.vst3
+RESULT soak t=592s memory=44044KB handles=1177 identical=28412643 different=36 relocks=36
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak-done seconds=600 saves=298 properties=85 switches=59 rescans=9 restarts=931
+RESULT soak-audio identical=28798798 different=36 relocks=36 unmatched=0
+RESULT soak-memory start=42832KB end=44072KB max=44080KB handles start=1170 end=1177 max=1179
+CHECK audio kept flowing for the whole run                       ok
+CHECK audio only changes at plug-in switches (nothing else disturbs it) ok
+CHECK no memory growth over the run (< 40 MB)                    ok
+CHECK no handle leak over the run                                ok
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+info: [VST3 Plugin:] Latency of the plugin is 32 samples
+RESULT soak-final identical=240718 different=0
+CHECK bit-identical audio after the run                          ok
+debug: - filter 'k0' (vst3_filter) removed from source 'mic'
+debug: - filter 'k1' (vst3_filter) removed from source 'mic'
+debug: - filter 'k2' (vst3_filter) removed from source 'mic'
+debug: - filter 'k3' (vst3_filter) removed from source 'mic'
+debug: - filter 'k4' (vst3_filter) removed from source 'mic'
+debug: private source 'k0' destroyed
+debug: - filter 'k5' (vst3_filter) removed from source 'mic'
+debug: - filter 'k6' (vst3_filter) removed from source 'mic'
+debug: - filter 'k7' (vst3_filter) removed from source 'mic'
+debug: - filter 'k8' (vst3_filter) removed from source 'mic'
+debug: - filter 'k9' (vst3_filter) removed from source 'mic'
+debug: - filter 'k10' (vst3_filter) removed from source 'mic'
+debug: - filter 'k11' (vst3_filter) removed from source 'mic'
+debug: - filter 'k12' (vst3_filter) removed from source 'mic'
+debug: - filter 'k13' (vst3_filter) removed from source 'mic'
+debug: - filter 'k14' (vst3_filter) removed from source 'mic'
+debug: - filter 'k15' (vst3_filter) removed from source 'mic'
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k1' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k2' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k3' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k4' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k5' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k6' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k7' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k8' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k9' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k10' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k11' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k12' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k13' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k14' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'k15' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: source 'mic' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'probe' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+RESULT before-shutdown entry=75 exit=75 procs=74 terminated=74 process=975029 violations=124 inactive=0 offmain=1888 activations=1018 restartsReq=944 lastKind=3
+info: Freeing OBS context data
+RESULT after-shutdown entry=75 exit=75 procs=74 terminated=74 process=975029 violations=124 inactive=0 offmain=1888 activations=1018 restartsReq=944 lastKind=3
+CHECK no plug-in control call while process() was running        FAILED
+CHECK process() never called on an inactive plug-in              ok
+CHECK plug-in control/teardown only on the UI thread             FAILED
+RESULT plugin-process-calls ftz-on=0 ftz-off=975029
+CHECK every module entry has its exit                            ok
+RESULT failures=2

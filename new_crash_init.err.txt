@@ -1,0 +1,1 @@
+error: [obs-vst3 patch] VST3 plug-in 'D:\a\_temp\h_new_crash_init\Programs\Common\VST3\OBSTestFX.vst3' crashed during initialisation (exception 0xC0000005). OBS keeps running; this filter now passes the audio through unprocessed. Remove and re-add the filter or restart OBS to use the plug-in again.

@@ -1,0 +1,17 @@
+info: CPU Name: AMD EPYC 9V74 80-Core Processor                
+info: CPU Speed: 2596MHz
+info: Physical Cores: 2, Logical Cores: 4
+info: Physical Memory: 16378MB Total, 13757MB Free
+info: Windows Version: 10.0 Build 20348 (release: 21H2; revision: 5622; 64-bit)
+info: Running as administrator: true
+info: Windows 10/11 Gaming Features:
+info: 	Game Mode: Probably On (no reg key set)
+info: ---------------------------------
+info: audio settings reset:
+	samples per sec: 48000
+	speakers:        2
+	max buffering:   960 milliseconds
+	buffering type:  dynamically increasing
+debug: ---------------------------------
+debug: Loading module: obs-vst3.dll
+info: OBS-VST3 filter loaded successfully (version 1.0.0)

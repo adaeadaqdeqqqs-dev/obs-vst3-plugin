@@ -1,0 +1,77 @@
+info: CPU Name: AMD EPYC 9V74 80-Core Processor                
+info: CPU Speed: 2596MHz
+info: Physical Cores: 2, Logical Cores: 4
+info: Physical Memory: 16378MB Total, 13828MB Free
+info: Windows Version: 10.0 Build 20348 (release: 21H2; revision: 5622; 64-bit)
+info: Running as administrator: true
+info: Windows 10/11 Gaming Features:
+info: 	Game Mode: Probably On (no reg key set)
+info: ---------------------------------
+info: audio settings reset:
+	samples per sec: 48000
+	speakers:        2
+	max buffering:   960 milliseconds
+	buffering type:  dynamically increasing
+debug: ---------------------------------
+debug: Loading module: obs-vst3.dll
+info: OBS-VST3 filter loaded successfully (version 1.0.0)
+debug: private source 'probe' (vst3_filter) created
+info: [VST3 Scanner] Available plugins:
+info: [VST3 Scanner]   OBSTestFX A
+info: [VST3 Scanner]   OBSTestFX B
+info: [VST3 Scanner] Loaded cache & non-cacheable VST3s in 1 ms, found 2 plugins
+CHECK initial VST3 scan finished                                 ok
+RESULT harness-alive=1 obs-version=31.0.4
+CHECK test plug-in classes found by the scanner                  ok
+RESULT after-scan entry=1 exit=1 procs=0 terminated=0 process=0 violations=0 inactive=0 offmain=0 activations=0 restartsReq=0 lastKind=0
+debug: source 'mic' (test_audio_src) created
+RESULT module-loads-during-startup-scan=1
+CHECK next start re-read the shell from disk                     ok
+CHECK real fingerprint stored again                              ok
+debug: source 'mic' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+debug: private source 'probe' destroyed
+debug: gs_enter_context: Null 'graphics' parameter
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_texture_destroy: called while not in a graphics context
+debug: gs_leave_context: called while not in a graphics context
+RESULT before-shutdown entry=1 exit=1 procs=0 terminated=0 process=0 violations=0 inactive=0 offmain=0 activations=0 restartsReq=0 lastKind=0
+info: Freeing OBS context data
+RESULT after-shutdown entry=1 exit=1 procs=0 terminated=0 process=0 violations=0 inactive=0 offmain=0 activations=0 restartsReq=0 lastKind=0
+CHECK no plug-in control call while process() was running        ok
+CHECK process() never called on an inactive plug-in              ok
+CHECK plug-in control/teardown only on the UI thread             ok
+RESULT plugin-process-calls ftz-on=0 ftz-off=0
+CHECK every module entry has its exit                            ok
+RESULT failures=0

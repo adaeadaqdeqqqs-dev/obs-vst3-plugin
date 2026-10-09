@@ -1,0 +1,1 @@
+error: [obs-vst3 patch] VST3 plug-in 'OBSTestFX A' crashed during audio processing (exception 0xE06D7363). OBS keeps running; this filter now passes the audio through unprocessed. Remove and re-add the filter or restart OBS to use the plug-in again.
