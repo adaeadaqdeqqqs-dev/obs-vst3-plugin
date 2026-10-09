@@ -1,0 +1,111 @@
+diff --git a/plugins/obs-vst3/obs-vst3.cpp b/plugins/obs-vst3/obs-vst3.cpp
+index fcb537e..168bc40 100644
+--- a/plugins/obs-vst3/obs-vst3.cpp
++++ b/plugins/obs-vst3/obs-vst3.cpp
+@@ -166,6 +166,43 @@ VST3Scanner *list;
+ std::atomic<bool> vst3ScanDone;
+ static std::thread vst3ScanThread;
+ 
++// [user build patch] Never initialise a VST3 module while the scanner thread may be loading the same module.
++// Shell plug-ins such as Waves' WaveShell crash when two threads run their module init at the same time.
++static void waitForVst3Scan()
++{
++	// No time limit: a plug-in is never loaded while the scan is still running.
++	auto lastLog = std::chrono::steady_clock::now();
++	while (!vst3ScanDone.load(std::memory_order_acquire)) {
++		std::this_thread::sleep_for(std::chrono::milliseconds(20));
++		if (std::chrono::steady_clock::now() - lastLog >= std::chrono::seconds(30)) {
++			blog(LOG_WARNING, "[obs-vst3 patch] still waiting for the VST3 scan to finish before loading plug-ins");
++			lastLog = std::chrono::steady_clock::now();
++		}
++	}
++}
++
++// [user build patch] Module file fingerprint (size + last write time) so that modules flagged
++// kClassesDiscardable (e.g. Waves WaveShell) can be cached and are only rescanned when the file changes.
++static std::pair<long long, long long> vst3ModuleFingerprint(const std::string &path)
++{
++	std::error_code ec;
++	const std::filesystem::path fp(path);
++	if (std::filesystem::is_regular_file(fp, ec))
++		return {(long long)std::filesystem::file_size(fp, ec),
++			(long long)std::filesystem::last_write_time(fp, ec).time_since_epoch().count()};
++	return {0, 0};
++}
++
++static bool vst3ModuleChanged(const std::unordered_map<std::string, std::pair<long long, long long>> &fingerprints,
++			      const std::string &modulePath)
++{
++	const auto it = fingerprints.find(modulePath);
++	if (it == fingerprints.end())
++		return true;
++	const auto now = vst3ModuleFingerprint(modulePath);
++	return now.first == 0 || now != it->second;
++}
++
+ static void vst3CacheSave()
+ {
+ 	if (!list) {
+@@ -189,6 +226,11 @@ static void vst3CacheSave()
+ 		obs_data_set_string(obj, "pluginName", p.pluginName.c_str());
+ 		obs_data_set_bool(obj, "discardable", p.discardable);
+ 		obs_data_set_bool(obj, "isFX", p.isFX);
++		{ // [user build patch] module file fingerprint
++			const auto fpv = vst3ModuleFingerprint(p.path);
++			obs_data_set_int(obj, "fsize", fpv.first);
++			obs_data_set_int(obj, "mtime", fpv.second);
++		}
+ 		obs_data_array_push_back(arr, obj);
+ 		obs_data_release(obj);
+ 	}
+@@ -225,6 +267,7 @@ static bool vst3CacheLoad()
+ 	list->classCount.clear();
+ 
+ 	std::unordered_map<std::string, ModuleCache> modules;
++	std::unordered_map<std::string, std::pair<long long, long long>> fingerprints; // [user build patch]
+ 
+ 	size_t jsonPluginNumber = obs_data_array_count(jsonPluginList);
+ 	for (size_t i = 0; i < jsonPluginNumber; ++i) {
+@@ -237,6 +280,7 @@ static bool vst3CacheLoad()
+ 		classInfo.pluginName = obs_data_get_string(obj, "pluginName");
+ 		classInfo.discardable = obs_data_get_bool(obj, "discardable");
+ 		classInfo.isFX = obs_data_get_bool(obj, "isFX");
++		fingerprints[classInfo.path] = {obs_data_get_int(obj, "fsize"), obs_data_get_int(obj, "mtime")}; // [user build patch]
+ 
+ 		obs_data_release(obj);
+ 
+@@ -260,7 +304,16 @@ static bool vst3CacheLoad()
+ 	for (auto &[modulePath, m] : modules) {
+ 		// if a module has the flag kClassesDiscardable, the SDK compels us to do a full load from binary, duh ...
+ 		if (m.discardable) {
+-			list->addModuleClasses(modulePath);
++			// [user build patch] reuse the cached class list while the module file is unchanged
++			if (vst3ModuleChanged(fingerprints, modulePath)) {
++				list->addModuleClasses(modulePath);
++			} else {
++				blog(LOG_INFO, "[obs-vst3 patch] Using cached class list for %s (module file unchanged)", modulePath.c_str());
++				for (auto &classInfo : m.classes) {
++					list->pluginList.push_back(classInfo);
++					++list->classCount[modulePath];
++				}
++			}
+ 		} else {
+ 			for (auto &classInfo : m.classes) {
+ 				list->pluginList.push_back(classInfo);
+@@ -716,6 +769,7 @@ static void vst3Update(void *data, obs_data_t *settings)
+ 		filterData->vst3Id = vst3PluginId;
+ 		filterData->lastInitFailed = false;
+ 
++		waitForVst3Scan();
+ 		if (!list->getPathById(vst3PluginId).empty()) {
+ 			filterData->vst3Path = list->getPathById(vst3PluginId);
+ 			filterData->vst3Name = list->getNameById(vst3PluginId);
+@@ -1245,7 +1299,7 @@ static bool vst3_rescan_callback(obs_properties_t *props, obs_property_t *proper
+ 		vst3ScanThread.join();
+ 	}
+ 
+-	vst3ScanThread = std::thread(scanVst3List, false);
++	vst3ScanThread = std::thread(scanVst3List, true) /* [user build patch] incremental rescan: new/removed modules + changed shells only */;
+ 	return true;
+ }
+ 

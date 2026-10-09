@@ -1,0 +1,129 @@
+name: Test obs-vst3 on Windows with the official OBS 31.0.4
+
+# Loads the previous and the new obs-vst3.dll into the official OBS 31.0.4 runtime (obs.dll + Qt from the OBS
+# release) with a headless test host and an instrumented test VST3 plug-in, and runs every robustness scenario,
+# including real crashes inside the plug-in. Results: branch vst3-test-sonuclari (results/summary.md).
+on:
+  workflow_dispatch:
+  push:
+    branches: [ vst3-test ]
+
+env:
+  OBS_REPO: https://github.com/obsproject/obs-studio.git
+  OBS_VERSION: 31.0.4
+  PR_COMMIT: 39984171fee94ca8661e6544813c8c0358347a4c
+  VST3SDK_TAG: v3.8.1_build_84
+
+permissions:
+  contents: write
+
+jobs:
+  test-windows:
+    runs-on: windows-2022
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Check out the test files
+        uses: actions/checkout@v4
+
+      - name: Clone OBS Studio
+        run: |
+          git clone --recursive --branch $env:OBS_VERSION $env:OBS_REPO obs-studio
+          if ($LASTEXITCODE -ne 0) { throw "OBS clone failed" }
+
+      - name: Fetch obs-vst3 (PR 12752, pinned) and prepare the previous version
+        run: |
+          git init pr
+          cd pr
+          git config core.autocrlf false
+          git config core.eol lf
+          git remote add origin $env:OBS_REPO
+          git config core.sparseCheckout true
+          Set-Content -Path .git/info/sparse-checkout -Value @('/plugins/obs-vst3/', '/cmake/finders/FindVST3SDK.cmake') -Encoding ascii
+          git fetch --depth 1 origin $env:PR_COMMIT
+          if ($LASTEXITCODE -ne 0) { throw "PR commit could not be fetched" }
+          git -c advice.detachedHead=false checkout FETCH_HEAD
+          git apply --check ../vst3test/base.patch
+          if ($LASTEXITCODE -ne 0) { Write-Output "::error::base.patch does not apply"; throw "base.patch" }
+          git apply ../vst3test/base.patch
+
+      - name: Inject the previous obs-vst3 and the test tools into OBS
+        run: |
+          Copy-Item -Recurse pr/plugins/obs-vst3 obs-studio/plugins/obs-vst3
+          Copy-Item pr/cmake/finders/FindVST3SDK.cmake obs-studio/cmake/finders/FindVST3SDK.cmake
+          New-Item -ItemType Directory -Force obs-studio/plugins/obs-vst3-test | Out-Null
+          Copy-Item vst3test/CMakeLists.txt, vst3test/harness.cpp, vst3test/testfx.cpp obs-studio/plugins/obs-vst3-test/
+          Add-Content -Path obs-studio/plugins/CMakeLists.txt -Value "`nadd_obs_plugin(obs-vst3 PLATFORMS WINDOWS MACOS LINUX)`nadd_subdirectory(obs-vst3-test)" -Encoding ascii
+          Add-Content -Path obs-studio/plugins/obs-vst3/CMakeLists.txt -Value "`ntarget_compile_definitions(obs-vst3 PRIVATE NOMINMAX)" -Encoding ascii
+          git -c advice.detachedHead=false clone --recursive --depth 1 --shallow-submodules --branch $env:VST3SDK_TAG https://github.com/steinbergmedia/vst3sdk.git obs-studio/plugins/obs-vst3/sdk
+          if ($LASTEXITCODE -ne 0) { throw "VST3 SDK clone failed" }
+
+      - name: Configure
+        run: |
+          cd obs-studio
+          cmake -S . -B build_x64 -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_VST3=ON `
+            -DCMAKE_C_FLAGS="/DWIN32 /D_WINDOWS /WX-" -DCMAKE_CXX_FLAGS="/DWIN32 /D_WINDOWS /EHsc /GR /WX-" `
+            -DCMAKE_COMPILE_WARNING_AS_ERROR=OFF
+          if ($LASTEXITCODE -ne 0) { Write-Output "::error::CMake configure failed"; throw "configure" }
+
+      - name: Build the previous obs-vst3, the test host and the test plug-in
+        run: |
+          cd obs-studio
+          cmake --build build_x64 --config RelWithDebInfo --target obs-vst3 obs-vst3-harness OBSTestFX 2>&1 | Tee-Object -Variable buildOut | Out-Host
+          if ($LASTEXITCODE -ne 0) {
+            $buildOut | ForEach-Object { "$_" } | Select-String -Pattern 'error C\d{4}|error LNK\d{4}|fatal error|error MSB\d{4}' |
+              Select-Object -First 12 | ForEach-Object { Write-Output ("::error::" + $_.Line.Trim()) }
+            throw "Build failed"
+          }
+
+      - name: Collect the previous and the new obs-vst3.dll
+        run: |
+          New-Item -ItemType Directory -Force out/base/data/locale, out/new | Out-Null
+          $base = Get-ChildItem -Recurse obs-studio/build_x64 -Filter obs-vst3.dll | Select-Object -First 1
+          Copy-Item $base.FullName out/base/
+          Copy-Item obs-studio/plugins/obs-vst3/data/locale/* out/base/data/locale/
+          git fetch --depth 1 origin vst3-cikti-OBS31.0.4
+          if ($LASTEXITCODE -ne 0) { throw "new package branch not found" }
+          git worktree add --detach newpkg FETCH_HEAD
+          Copy-Item newpkg/obs-plugins/64bit/obs-vst3.dll out/new/
+          Copy-Item -Recurse newpkg/data/obs-plugins/obs-vst3 out/new/data
+          Get-FileHash out/base/obs-vst3.dll, out/new/obs-vst3.dll -Algorithm SHA256 | Format-Table -AutoSize | Out-String | Write-Output
+
+      - name: Download the official OBS 31.0.4 for Windows
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $assets = gh release view $env:OBS_VERSION --repo obsproject/obs-studio --json assets --jq '.assets[].name'
+          $zip = $assets | Where-Object { $_ -match 'Windows' -and $_ -match '\.zip$' -and $_ -notmatch 'PDB|Debug|arm64' } | Select-Object -First 1
+          if (-not $zip) { Write-Output "::error::no Windows zip in the OBS release ($($assets -join ', '))"; throw "no zip" }
+          gh release download $env:OBS_VERSION --repo obsproject/obs-studio --pattern $zip --dir obsdl
+          Expand-Archive (Join-Path obsdl $zip) -DestinationPath obs-official
+          $obsdll = Get-ChildItem -Recurse obs-official -Filter obs.dll | Select-Object -First 1
+          if (-not $obsdll) { throw "obs.dll not found in $zip" }
+          "OBS_BIN=$($obsdll.DirectoryName)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          Write-Output "official OBS: $zip -> $($obsdll.DirectoryName)"
+          (Get-Item $obsdll.FullName).VersionInfo | Format-List FileVersion, ProductVersion | Out-String | Write-Output
+
+      - name: Run the robustness scenarios (previous and new obs-vst3)
+        run: |
+          $harness = Get-ChildItem -Recurse obs-studio/build_x64 -Filter obs-vst3-harness.exe | Select-Object -First 1
+          $testfx = Get-ChildItem -Recurse obs-studio/build_x64 -Filter OBSTestFX.vst3 | Select-Object -First 1
+          Copy-Item $harness.FullName $env:OBS_BIN
+          $ws = (Get-Location).Path
+          ./vst3test/run_tests.ps1 -ObsBin $env:OBS_BIN -TestFx $testfx.FullName -Variants "base=$ws\out\base;new=$ws\out\new"
+
+      - name: Publish the results to branch vst3-test-sonuclari
+        if: always()
+        run: |
+          if (-not (Test-Path results)) { New-Item -ItemType Directory results | Out-Null; "no results" | Set-Content results/summary.md }
+          cd results
+          git init -q -b sonuc
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -q -m "obs-vst3 test results (workflow commit ${{ github.sha }})"
+          git push -q --force "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" "HEAD:refs/heads/vst3-test-sonuclari"
+          Get-Content summary.md | ForEach-Object { Write-Output "::notice::$_" }
+          $status = Get-Content status.txt -ErrorAction SilentlyContinue
+          if ($status -notmatch 'NEW_FAILURES=0') { throw "the new obs-vst3 failed a scenario: $status" }
