@@ -48,8 +48,9 @@ $newFailures = 0
 
 foreach ($v in ($Variants -split ';')) {
   $name, $dir = $v -split '=', 2
-  $dll = Join-Path $dir 'obs-vst3.dll'
-  $data = Join-Path $dir 'data'
+  # libobs takes the module name from the text after the last '/', so the paths use forward slashes
+  $dll = (Join-Path $dir 'obs-vst3.dll').Replace('\', '/')
+  $data = (Join-Path $dir 'data').Replace('\', '/')
   $shellCfg = $null
   foreach ($s in $scenarios) {
     # every run gets its own VST3 folder (scanner path) and OBS config folder; the shell runs share one

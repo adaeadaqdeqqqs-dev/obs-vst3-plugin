@@ -807,7 +807,7 @@ int main(int argc, char **argv)
 				obs_properties_destroy(pr);
 				props++;
 			}
-			if (tick % 40 == 0 || tick % 40 == 10) {
+			if (envInt("HARNESS_SWAPS", 1) && (tick % 40 == 0 || tick % 40 == 10)) {
 				const int k = (tick / 40) % n;
 				const bool toOther = tick % 40 == 0;
 				const bool isB = (k % 2) == 1;
